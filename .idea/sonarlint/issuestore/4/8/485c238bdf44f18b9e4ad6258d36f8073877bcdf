@@ -1,0 +1,10 @@
+
+	java:S112÷"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8á–€¯ê1J$adcc1180-7a18-482f-94ae-0cb2192d17df
+–
+java:S3776á"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(ƒ¯Û÷8­—€¯ê1J$3acf57bd-2a11-4ac4-a719-3eb525e59978
+m
+java:S2140")Use "java.util.Random.nextInt()" instead.(Ø£“á8³—€¯ê1J$a832aa0c-558e-439b-83a9-fb74dda5dd59
+€
+java:S6019ä"<Remove the '?' from this unnecessarily reluctant quantifier.(ÀÂÄ€8·—€¯ê1J$2ca805e9-78bf-4017-8862-580fc85326d0
+˜
+java:S5843ä"TSimplify this regular expression to reduce its complexity from 23 to the 20 allowed.(ÀÂÄ€8·—€¯ê1J$14a23fcd-4923-44fb-a939-0ca25153ef4d
