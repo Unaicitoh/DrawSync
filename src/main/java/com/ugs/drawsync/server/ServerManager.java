@@ -21,8 +21,7 @@ public class ServerManager {
         new Thread(() -> {
             try {
                 server = new ServerSocket(port);
-                System.out.println("Starting server ");
-                while (true) {
+                while (!server.isClosed()) {
                     Socket socket = server.accept();
                     ClientHandler client = new ClientHandler(socket, ui, this);
                     clients.add(client);
@@ -34,7 +33,17 @@ public class ServerManager {
         }).start();
     }
 
-    public static void broadcastMessage(String text) {
-        clients.forEach(c -> c.sendMessage(text));
+    public static void broadcastMessage(Message text) {
+        for (int i = 0; i < clients.size(); i++) {
+            try {
+                clients.get(i).sendMessage(text);
+            } catch (IOException e) {
+                clients.remove(clients.get(i));
+            }
+        }
+    }
+
+    public ServerSocket getConnection() {
+        return server;
     }
 }

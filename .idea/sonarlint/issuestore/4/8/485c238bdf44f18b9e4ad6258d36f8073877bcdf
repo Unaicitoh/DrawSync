@@ -1,10 +1,22 @@
 
-	java:S112χ"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òιόÿÿÿÿ8α–€―κ1J$adcc1180-7a18-482f-94ae-0cb2192d17df
-–
-java:S3776α"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(ƒ―Ϋχ8­—€―κ1J$3acf57bd-2a11-4ac4-a719-3eb525e59978
+	java:S112έ"FDefine and throw a dedicated exception instead of using a generic one.(ΌÿΎΉÿÿÿÿÿ8ϋέκ1J$176eaac2-d590-47b2-9534-1c20438feaff
+	java:S112γ"FDefine and throw a dedicated exception instead of using a generic one.(ΌÿΎΉÿÿÿÿÿ8ϋέκ1J$d2681ef2-6311-4bd5-9fc7-6d155728c74d
+	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(ΌÿΎΉÿÿÿÿÿ8ϋέκ1J$189b4e37-a17e-4bed-9058-1f4586826faa
+	java:S112¥"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òιόÿÿÿÿ8ϋέκ1J$9e371779-885d-44eb-bf11-f385492fbcc7
+	java:S112Ζ"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òιόÿÿÿÿ8ϋέκ1J$e4d08aa4-4d8b-4f3f-9244-93d829fd54c2
+w
+java:S3740u"/Provide the parametrized type for this generic.(ζϊϊÿÿÿÿ8ϋέκ1J$fb7b1c59-764d-4945-aa64-0109b09f8809
+w
+java:S3740u"/Provide the parametrized type for this generic.(ζϊϊÿÿÿÿ8ϋέκ1J$7c813e4e-bc55-44eb-b37d-d3cd45254652
+
+java:S1149u"VReplace the synchronized class "Hashtable" by an unsynchronized one such as "HashMap".(ζϊϊÿÿÿÿ8£ϋέκ1J$cacbb166-c4ad-440e-b407-9297e0454d0a
+p
+java:S1602",Remove useless curly braces around statement(€ρΫ…8²ϋέκ1J$e4ebfd20-9ae8-4de6-aa2f-9fde9bd2d1cf
+›
+java:S3776°"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(£°Ι¬ÿÿÿÿÿ8΄ϋέκ1J$dd333d48-59c9-4796-b02d-ccd70b566644
 m
-java:S2140")Use "java.util.Random.nextInt()" instead.(Ψ£“α8³—€―κ1J$a832aa0c-558e-439b-83a9-fb74dda5dd59
+java:S2140ή")Use "java.util.Random.nextInt()" instead.(Ψ£“α8¶ϋέκ1J$7f970758-2aff-41f4-bc28-64504254fcaa
 €
-java:S6019δ"<Remove the '?' from this unnecessarily reluctant quantifier.(ΐΒΔ€8·—€―κ1J$2ca805e9-78bf-4017-8862-580fc85326d0
+java:S6019³"<Remove the '?' from this unnecessarily reluctant quantifier.(ΐΒΔ€8Έϋέκ1J$c0421b66-85ac-4c94-ad2e-c5011bec7ba5
 
-java:S5843δ"TSimplify this regular expression to reduce its complexity from 23 to the 20 allowed.(ΐΒΔ€8·—€―κ1J$14a23fcd-4923-44fb-a939-0ca25153ef4d
+java:S5843³"TSimplify this regular expression to reduce its complexity from 23 to the 20 allowed.(ΐΒΔ€8Έϋέκ1J$af7a9131-adaf-4a7f-a5ba-49d6c27d1b89

@@ -1,6 +1,8 @@
 package com.ugs.drawsync.gui;
 
+import com.ugs.drawsync.server.ActionType;
 import com.ugs.drawsync.server.ClientHandler;
+import com.ugs.drawsync.server.Message;
 import com.ugs.drawsync.server.ServerManager;
 
 import javax.swing.*;
@@ -13,6 +15,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Hashtable;
 import java.util.regex.Pattern;
 
 public class GUIBoard extends JFrame {
@@ -34,6 +37,10 @@ public class GUIBoard extends JFrame {
     private JLabel usernameValidation;
     private JPanel ipValidationPanel;
     private JLabel ipValidation;
+    private JButton clearButton;
+    private Canvas canvas;
+    private JButton colorButton;
+    private JSlider strokeSliderButton;
 
     public GUIBoard(String title, int width, int height) {
         initFrame(title, width, height);
@@ -81,24 +88,52 @@ public class GUIBoard extends JFrame {
         users = new JTextArea();
         users.setFont(getSegoeFont());
         JScrollPane usersScroll = new JScrollPane(users, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        usersScroll.setPreferredSize(new Dimension(200, 0));
+        usersScroll.setPreferredSize(new Dimension(175, 0));
         users.setEditable(false);
         users.setLineWrap(true);
         users.setBackground(Color.lightGray);
         users.setMargin(new Insets(5, 5, 5, 5));
 
-        Canvas canvas = new Canvas();
+        JPanel canvasOptions = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
+        canvasOptions.setPreferredSize(new Dimension(100, 0));
+        ImageIcon clearIcon = new ImageIcon("src/main/resources/images/clearIcon.png");
+        resizeIcon(clearIcon, 25, 25);
+        clearButton = new JButton(clearIcon);
+        clearButton.setMargin(new Insets(1, 1, 1, 1));
+        clearButton.setFocusable(false);
+        ImageIcon colorIcon = new ImageIcon("src/main/resources/images/colorIcon.png");
+        resizeIcon(colorIcon, 25, 25);
+        colorButton = new JButton(colorIcon);
+        colorButton.setMargin(new Insets(1, 1, 1, 1));
+        colorButton.setFocusable(false);
+        JPanel sliderPanel = new JPanel();
+        JLabel sliderLabel = new JLabel("Brush Size");
+        sliderPanel.setPreferredSize(new Dimension(90, 55));
+        strokeSliderButton = new JSlider(0, 100, 10);
+        strokeSliderButton.setPreferredSize(new Dimension(90, 32));
+        sliderPanel.add(sliderLabel);
+        sliderPanel.add(strokeSliderButton);
+        strokeSliderButton.setPaintLabels(true);
+        Hashtable labelTable = new Hashtable();
+        labelTable.put(0, new JLabel("SM"));
+        labelTable.put(100 / 2, new JLabel("MD"));
+        labelTable.put(100, new JLabel("XL"));
+        strokeSliderButton.setLabelTable(labelTable);
+        canvasOptions.add(colorButton);
+        canvasOptions.add(clearButton);
+        canvasOptions.add(sliderPanel);
+
+        canvas = new Canvas();
+        canvas.setStroke(strokeSliderButton.getValue());
 
         mainScreen.add(header, BorderLayout.NORTH);
         mainScreen.add(usersScroll, BorderLayout.EAST);
         mainScreen.add(chat, BorderLayout.SOUTH);
+        mainScreen.add(canvasOptions, BorderLayout.WEST);
         mainScreen.add(canvas, BorderLayout.CENTER);
 
     }
 
-    public static Font getSegoeFont() {
-        return new Font("Segoe UI", Font.PLAIN, 12);
-    }
 
     private void initIntroScreen() {
         introScreen = new JPanel();
@@ -108,13 +143,13 @@ public class GUIBoard extends JFrame {
         resizeIcon(headerIcon, 300, 300);
         JLabel headerImage = new JLabel(headerIcon);
         headerPanel.add(headerImage);
-        JLabel addressLabel = new JLabel("IP:Port or Port:");
-        addressLabel.setMaximumSize(new Dimension(90, 40));
+        JLabel addressLabel = new JLabel("Port or IP:Port");
+        addressLabel.setMaximumSize(new Dimension(90, 5));
         addressLabel.setAlignmentX(SwingConstants.LEFT);
         ipInput = new JTextField(15);
         ipInput.setMaximumSize(new Dimension(200, 40));
-        JLabel usernameLabel = new JLabel("Username:");
-        usernameLabel.setMaximumSize(new Dimension(90, 40));
+        JLabel usernameLabel = new JLabel("Username");
+        usernameLabel.setMaximumSize(new Dimension(90, 5));
         usernameLabel.setAlignmentX(SwingConstants.LEFT);
         username = new JTextField(15);
         username.setMaximumSize(new Dimension(200, 40));
@@ -155,7 +190,7 @@ public class GUIBoard extends JFrame {
         introScreen.add(Box.createRigidArea(new Dimension(0, 15))); // Width of the gap
         introScreen.add(buttonsPanel);
         introScreen.add(Box.createVerticalGlue());
-        introScreen.add(Box.createRigidArea(new Dimension(0, 200))); // Width of the gap
+        introScreen.add(Box.createRigidArea(new Dimension(0, 250))); // Width of the gap
         add(introScreen, BorderLayout.CENTER);
     }
 
@@ -177,10 +212,20 @@ public class GUIBoard extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
+
                 if (isServer && server != null) {
-                    broadcastMessage(ClientHandler.SERVER_CLOSING + username.getText() + " left the room. Server closed.");
-                } else if (!isServer && client != null && client.getClient().isConnected()) {
-                    client.sendMessage(ClientHandler.CLIENT_CLOSING + username.getText());
+                    ServerManager.broadcastMessage(Message.buildMessage(ActionType.SERVER_CLOSING, username.getText() + " left the room. Server closed."));
+                    try {
+                        server.getConnection().close();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                } else if (!isServer && client != null && !client.getConnection().isClosed()) {
+                    try {
+                        client.sendMessage(Message.buildMessage(ActionType.CLIENT_CLOSING, username.getText()));
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
         });
@@ -217,12 +262,46 @@ public class GUIBoard extends JFrame {
             @Override
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
-                sendMessage(e.getKeyChar() == KeyEvent.VK_ENTER && !textInput.getText().isEmpty());
+                try {
+                    sendMessage(e.getKeyChar() == KeyEvent.VK_ENTER && !textInput.getText().isEmpty());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
     }
 
     private void createButtonsListener() {
+        createIntroButtonsListeners();
+        createMainButtonsListeners();
+    }
+
+    private void createMainButtonsListeners() {
+        clearButton.addActionListener(b -> {
+            canvas.clear();
+        });
+        colorButton.addActionListener(b -> {
+            Color color = JColorChooser.showDialog(null, "Pick a Color", canvas.getColor(), true);
+            if (color != null) {
+                canvas.setColor(color);
+            }
+        });
+        sendButton.addActionListener(b -> {
+            try {
+                sendMessage(!textInput.getText().isEmpty());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        strokeSliderButton.addChangeListener(e -> {
+            JSlider slider = (JSlider) e.getSource();
+            if (!slider.getValueIsAdjusting()) {
+                canvas.setStroke(Math.max(2, slider.getValue()));
+            }
+        });
+    }
+
+    private void createIntroButtonsListeners() {
         connectButton.addActionListener(b -> {
             boolean isOk = usernameValidation(true);
             if (!Pattern.matches("\\b(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?):\\d{1,5}?\\b", ipInput.getText())) {
@@ -274,17 +353,16 @@ public class GUIBoard extends JFrame {
                 isServer = true;
             }
         });
-        sendButton.addActionListener(b -> sendMessage(!textInput.getText().isEmpty()));
     }
 
-    private void sendMessage(boolean sendMessage) {
+    private void sendMessage(boolean sendMessage) throws IOException {
         if (sendMessage) {
-            String message = username.getText() + ": " + textInput.getText();
-            chatText.append("\n " + message);
+            String text = username.getText() + ": " + textInput.getText();
+            chatText.append("\n " + text);
             if (isServer) {
-                broadcastMessage(ClientHandler.SERVER_MESSAGE + message);
+                ServerManager.broadcastMessage(Message.buildMessage(ActionType.SERVER_MESSAGE, text));
             } else {
-                client.sendMessage(ClientHandler.CLIENT_MESSAGE + message);
+                client.sendMessage(Message.buildMessage(ActionType.CLIENT_MESSAGE, text));
             }
             textInput.setText("");
         }
@@ -301,16 +379,16 @@ public class GUIBoard extends JFrame {
         return isOk;
     }
 
-    private void broadcastMessage(String message) {
-        ServerManager.broadcastMessage(message);
-    }
-
     public JTextArea getChat() {
         return chatText;
     }
 
     public JTextArea getUsers() {
         return users;
+    }
+
+    public Font getSegoeFont() {
+        return new Font("Segoe UI", Font.PLAIN, 12);
     }
 
 }

@@ -2,21 +2,17 @@ package com.ugs.drawsync.server;
 
 import com.ugs.drawsync.gui.GUIBoard;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ClientHandler extends Thread {
-    public static final String USERS_REQUEST = "[SYNC_USERS_REQUEST=";
-    public static final String SERVER_MESSAGE = "[SERVER_MESSAGE=";
-    public static final String CLIENT_MESSAGE = "[CLIENT_MESSAGE=";
-    public static final String SERVER_CLOSING = "[SERVER_CLOSING=";
-    public static final String CLIENT_CLOSING = "[CLIENT_CLOSING=";
+
     private final Socket client;
     private final GUIBoard ui;
-    private PrintWriter out;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
     private ServerManager manager;
     private String username;
 
@@ -35,59 +31,62 @@ public class ClientHandler extends Thread {
     @Override
     public void run() {
         try {
-            out = new PrintWriter(client.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            if (manager == null) {
-                out.println(SERVER_MESSAGE + "Welcome to the room " + username);
-                out.println(USERS_REQUEST + username);
-            }
+            out = new ObjectOutputStream(client.getOutputStream());
+            in = new ObjectInputStream(client.getInputStream());
             System.out.println("Connecting client " + client.getRemoteSocketAddress());
-            String message;
-            while ((message = in.readLine()) != null) {
-                System.out.println("receiving message" + message);
-                String formattedMessage = message.substring(message.indexOf("=") + 1);
-                if (manager != null) {
-                    serverSideHandler(message, formattedMessage);
-                } else clientSideHandler(message, formattedMessage);
+            if (manager == null) {
+                out.writeObject(Message.buildMessage(ActionType.SERVER_MESSAGE, "Welcome to the room " + username));
+                out.writeObject(Message.buildMessage(ActionType.USERS_REQUEST, username));
             }
-        } catch (IOException e) {
-            throw new IllegalThreadStateException();
+            Message message;
+            while (!client.isClosed() && (message = (Message) in.readObject()) != null) {
+                if (manager != null) {
+                    serverSideHandler(message);
+                } else clientSideHandler(message);
+            }
+
+        } catch (ClassNotFoundException | IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    private void clientSideHandler(String message, String formattedMessage) {
-        if (message.startsWith(CLIENT_MESSAGE) && !message.substring(message.indexOf("=") + 1, message.indexOf(":")).equals(username)) {
-            System.out.println("Broadcast message" + message);
-            insertChat(formattedMessage);
-        } else if (message.startsWith(USERS_REQUEST)) {
-            String users = formattedMessage.replace("|+*.", "\n");
-            syncUsers(users);
-        } else if (message.startsWith(SERVER_MESSAGE)) {
-            System.out.println("Server sending message");
-            insertChat(formattedMessage);
-        } else if (message.startsWith(SERVER_CLOSING)) {
-            insertChat(formattedMessage);
-            syncUsers("[ROOM CLOSED] Online Users:\n - " + username);
-        } else if (message.startsWith(CLIENT_CLOSING)) {
-            removeUser(formattedMessage);
+
+    private void clientSideHandler(Message message) throws IOException {
+        String text = message.getText();
+        switch (message.getType()) {
+            case CLIENT_MESSAGE -> {
+                if (!text.substring(0, text.indexOf(":")).equals(username)) {
+                    insertChat(text);
+                }
+            }
+            case SERVER_MESSAGE -> insertChat(text);
+            case USERS_REQUEST -> syncUsers(text);
+            case CLIENT_CLOSING -> removeUser(text);
+            case SERVER_CLOSING -> {
+                insertChat(text);
+                syncUsers("[ROOM CLOSED] Online Users:\n - " + username);
+                closeConnection();
+            }
         }
     }
 
-    private void serverSideHandler(String message, String formattedMessage) {
-        if (message.startsWith(CLIENT_MESSAGE)) {
-            System.out.println("Server broadcasting message");
-            broadcastMessage(message);
-            insertChat(formattedMessage);
-        } else if (message.startsWith(SERVER_MESSAGE)) {
-            broadcastMessage(message);
-            insertChat(formattedMessage);
-        } else if (message.startsWith(USERS_REQUEST)) {
-            ui.getUsers().append("\n - " + formattedMessage);
-            String users = ui.getUsers().getText().replace("\n", "|+*.");
-            broadcastMessage(USERS_REQUEST + users);
-        } else if (message.startsWith(CLIENT_CLOSING)) {
-            broadcastMessage(message);
-            removeUser(formattedMessage);
+    private void serverSideHandler(Message message) {
+        String text = message.getText();
+        switch (message.getType()) {
+            case CLIENT_MESSAGE, SERVER_MESSAGE -> {
+                ServerManager.broadcastMessage(message);
+                insertChat(text);
+            }
+            case USERS_REQUEST -> {
+                ui.getUsers().append("\n - " + text);
+                message.setText(ui.getUsers().getText());
+                ServerManager.broadcastMessage(message);
+            }
+            case CLIENT_CLOSING -> {
+                ServerManager.broadcastMessage(message);
+                removeUser(text);
+            }
+            default -> throw new IllegalArgumentException("Unexpected value: " + message.getType());
         }
     }
 
@@ -103,20 +102,28 @@ public class ClientHandler extends Thread {
         ui.getUsers().setText(users);
     }
 
-    private static void broadcastMessage(String message) {
-        ServerManager.broadcastMessage(message);
-    }
-
     private void insertChat(String formattedMessage) {
         ui.getChat().append("\n " + formattedMessage);
     }
 
-    public void sendMessage(String message) {
+    public void sendMessage(Message message) throws IOException {
         System.out.println("Sending message" + message);
-        out.println(message);
+        out.writeObject(message);
     }
 
-    public Socket getClient() {
+    private void closeConnection() throws IOException {
+        if (out != null) {
+            out.close();
+        }
+        if (in != null) {
+            in.close();
+        }
+        if (client != null) {
+            client.close();
+        }
+    }
+
+    public Socket getConnection() {
         return client;
     }
 }
