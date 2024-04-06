@@ -1,22 +1,24 @@
 
-	java:S112İ"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8ûŒİê1J$176eaac2-d590-47b2-9534-1c20438feaff
-	java:S112ã"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8ûŒİê1J$d2681ef2-6311-4bd5-9fc7-6d155728c74d
-	java:S112Œ"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8ûŒİê1J$189b4e37-a17e-4bed-9058-1f4586826faa
-	java:S112¥"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ûŒİê1J$9e371779-885d-44eb-bf11-f385492fbcc7
-	java:S112Æ"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ûŒİê1J$e4d08aa4-4d8b-4f3f-9244-93d829fd54c2
-w
-java:S3740u"/Provide the parametrized type for this generic.(æŸúšúÿÿÿÿ8ûŒİê1J$fb7b1c59-764d-4945-aa64-0109b09f8809
-w
-java:S3740u"/Provide the parametrized type for this generic.(æŸúšúÿÿÿÿ8ûŒİê1J$7c813e4e-bc55-44eb-b37d-d3cd45254652
-
-java:S1149u"VReplace the synchronized class "Hashtable" by an unsynchronized one such as "HashMap".(æŸúšúÿÿÿÿ8£ûŒİê1J$cacbb166-c4ad-440e-b407-9297e0454d0a
-p
-java:S1602˜",Remove useless curly braces around statement(€ñÛ…8²ûŒİê1J$e4ebfd20-9ae8-4de6-aa2f-9fde9bd2d1cf
+	java:S112›"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8¢é©ë1J$c3c92ec3-8182-4224-9abb-216719e6a357
+	java:S112¡"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8¢é©ë1J$62fc3eaf-6530-4bca-805d-8eaf8c7f5fc6
+	java:S112Ñ"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8¢é©ë1J$912105be-b3e1-43ed-9ca3-8d39a2bb9d3d
+	java:S112ê"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8£é©ë1J$9f83a38f-f31b-4dfa-bcbf-a11559a822b4
+	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8£é©ë1J$c7a7ad34-6cae-47c9-903b-f42cda983ed5
+x
+java:S3740º"/Provide the parametrized type for this generic.(æŸúšúÿÿÿÿ8£é©ë1J$c3b0f7b3-bf9d-4f87-92a5-49911cf94870
+x
+java:S3740º"/Provide the parametrized type for this generic.(æŸúšúÿÿÿÿ8£é©ë1J$119b6921-87df-4086-8396-991cbb0e7f36
+œ
+java:S1450)"YRemove the "lineButton" field and declare it as a local variable in the relevant methods.(Òª©É8ºé©ë1J$a33b7f60-9807-41dd-b5f1-9378c13b8c11
+Ÿ
+java:S1149º"VReplace the synchronized class "Hashtable" by an unsynchronized one such as "HashMap".(æŸúšúÿÿÿÿ8»é©ë1J$e1df40f6-5a85-4d13-bd60-1bc3a9959a80
+–
+java:S3776ì"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(áËóê8Èé©ë1J$f711952a-d116-4786-a477-2d79df88381c
 ›
-java:S3776°"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(£°É¬ÿÿÿÿÿ8´ûŒİê1J$dd333d48-59c9-4796-b02d-ccd70b566644
+java:S3776ú"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(£°É¬ÿÿÿÿÿ8Ğé©ë1J$72442035-4eee-48d6-ad72-48fa48f351c2
 m
-java:S2140Ş")Use "java.util.Random.nextInt()" instead.(Ø£“á8¶ûŒİê1J$7f970758-2aff-41f4-bc28-64504254fcaa
+java:S2140¨")Use "java.util.Random.nextInt()" instead.(Ø£“á8Óé©ë1J$34faf958-1ca9-4be3-81b7-01be5817fe91
 €
-java:S6019³"<Remove the '?' from this unnecessarily reluctant quantifier.(ÀÂÄ€8¸ûŒİê1J$c0421b66-85ac-4c94-ad2e-c5011bec7ba5
+java:S6019ı"<Remove the '?' from this unnecessarily reluctant quantifier.(ÀÂÄ€8Õé©ë1J$f8edee52-152f-4b99-ba3c-471eb4ff728e
 ˜
-java:S5843³"TSimplify this regular expression to reduce its complexity from 23 to the 20 allowed.(ÀÂÄ€8¸ûŒİê1J$af7a9131-adaf-4a7f-a5ba-49d6c27d1b89
+java:S5843ı"TSimplify this regular expression to reduce its complexity from 23 to the 20 allowed.(ÀÂÄ€8Õé©ë1J$1ccab796-31b6-471b-9f26-f63ec937e7c3

@@ -28,7 +28,7 @@ public class ServerManager {
                     client.start();
                 }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.err.println("Closing server");
             }
         }).start();
     }

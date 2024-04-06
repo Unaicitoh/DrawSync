@@ -36,7 +36,7 @@ public class ClientHandler extends Thread {
             System.out.println("Connecting client " + client.getRemoteSocketAddress());
             if (manager == null) {
                 out.writeObject(Message.buildMessage(ActionType.SERVER_MESSAGE, "Welcome to the room " + username));
-                out.writeObject(Message.buildMessage(ActionType.USERS_REQUEST, username));
+                out.writeObject(Message.buildMessage(ActionType.SYNC_USERS, username));
             }
             Message message;
             while (!client.isClosed() && (message = (Message) in.readObject()) != null) {
@@ -46,7 +46,7 @@ public class ClientHandler extends Thread {
             }
 
         } catch (ClassNotFoundException | IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("Client closed");
         }
     }
 
@@ -60,7 +60,7 @@ public class ClientHandler extends Thread {
                 }
             }
             case SERVER_MESSAGE -> insertChat(text);
-            case USERS_REQUEST -> syncUsers(text);
+            case SYNC_USERS -> syncUsers(text);
             case CLIENT_CLOSING -> removeUser(text);
             case SERVER_CLOSING -> {
                 insertChat(text);
@@ -77,7 +77,7 @@ public class ClientHandler extends Thread {
                 ServerManager.broadcastMessage(message);
                 insertChat(text);
             }
-            case USERS_REQUEST -> {
+            case SYNC_USERS -> {
                 ui.getUsers().append("\n - " + text);
                 message.setText(ui.getUsers().getText());
                 ServerManager.broadcastMessage(message);

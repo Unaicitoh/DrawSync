@@ -9,10 +9,7 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Hashtable;
@@ -41,6 +38,10 @@ public class GUIBoard extends JFrame {
     private Canvas canvas;
     private JButton colorButton;
     private JSlider strokeSliderButton;
+    private JButton lineButton;
+    private JPanel canvasContainer;
+    private JButton eraserButton;
+    private JButton brushButton;
 
     public GUIBoard(String title, int width, int height) {
         initFrame(title, width, height);
@@ -50,90 +51,6 @@ public class GUIBoard extends JFrame {
         setVisible(true);
         setLocationRelativeTo(null);
     }
-
-    private void initMainScreen() {
-        mainScreen = new JPanel(new BorderLayout());
-        ImageIcon headerIcon = new ImageIcon("src/main/resources/images/headerLogo.png");
-        resizeIcon(headerIcon, 50, 50);
-        JPanel header = new JPanel();
-        JLabel label = new JLabel("DrawSync", headerIcon, SwingConstants.CENTER);
-        label.setFont(new Font("Impact", Font.PLAIN, 44));
-        label.setIconTextGap(10);
-        header.setBackground(new Color(.55f, .55f, .55f, 1));
-        header.add(label);
-        ImageIcon sendIcon = new ImageIcon("src/main/resources/images/sendIcon.png");
-        resizeIcon(sendIcon, 25, 25);
-        JPanel chat = new JPanel();
-        chat.setBackground(Color.RED);
-        chat.setLayout(new BoxLayout(chat, BoxLayout.Y_AXIS));
-        chatText = new JTextArea("CHAT ROOM");
-        chatText.setMargin(new Insets(5, 5, 5, 5));
-        chatText.setFont(getSegoeFont());
-        chatText.setEditable(false);
-        chatText.setLineWrap(true);
-        JScrollPane chatScroll = new JScrollPane(chatText, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        chatScroll.setPreferredSize(new Dimension(0, 150));
-        JPanel chatInput = new JPanel();
-        chatInput.setLayout(new BoxLayout(chatInput, BoxLayout.X_AXIS));
-        chat.setLayout(new BoxLayout(chat, BoxLayout.Y_AXIS));
-        textInput = new JTextField(10);
-        textInput.setToolTipText("Insert your message");
-        sendButton = new JButton(sendIcon);
-        sendButton.setFocusable(false);
-        chatInput.add(textInput);
-        chatInput.add(sendButton);
-        chat.add(chatScroll);
-        chat.add(chatInput);
-
-        users = new JTextArea();
-        users.setFont(getSegoeFont());
-        JScrollPane usersScroll = new JScrollPane(users, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        usersScroll.setPreferredSize(new Dimension(175, 0));
-        users.setEditable(false);
-        users.setLineWrap(true);
-        users.setBackground(Color.lightGray);
-        users.setMargin(new Insets(5, 5, 5, 5));
-
-        JPanel canvasOptions = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
-        canvasOptions.setPreferredSize(new Dimension(100, 0));
-        ImageIcon clearIcon = new ImageIcon("src/main/resources/images/clearIcon.png");
-        resizeIcon(clearIcon, 25, 25);
-        clearButton = new JButton(clearIcon);
-        clearButton.setMargin(new Insets(1, 1, 1, 1));
-        clearButton.setFocusable(false);
-        ImageIcon colorIcon = new ImageIcon("src/main/resources/images/colorIcon.png");
-        resizeIcon(colorIcon, 25, 25);
-        colorButton = new JButton(colorIcon);
-        colorButton.setMargin(new Insets(1, 1, 1, 1));
-        colorButton.setFocusable(false);
-        JPanel sliderPanel = new JPanel();
-        JLabel sliderLabel = new JLabel("Brush Size");
-        sliderPanel.setPreferredSize(new Dimension(90, 55));
-        strokeSliderButton = new JSlider(0, 100, 10);
-        strokeSliderButton.setPreferredSize(new Dimension(90, 32));
-        sliderPanel.add(sliderLabel);
-        sliderPanel.add(strokeSliderButton);
-        strokeSliderButton.setPaintLabels(true);
-        Hashtable labelTable = new Hashtable();
-        labelTable.put(0, new JLabel("SM"));
-        labelTable.put(100 / 2, new JLabel("MD"));
-        labelTable.put(100, new JLabel("XL"));
-        strokeSliderButton.setLabelTable(labelTable);
-        canvasOptions.add(colorButton);
-        canvasOptions.add(clearButton);
-        canvasOptions.add(sliderPanel);
-
-        canvas = new Canvas();
-        canvas.setStroke(strokeSliderButton.getValue());
-
-        mainScreen.add(header, BorderLayout.NORTH);
-        mainScreen.add(usersScroll, BorderLayout.EAST);
-        mainScreen.add(chat, BorderLayout.SOUTH);
-        mainScreen.add(canvasOptions, BorderLayout.WEST);
-        mainScreen.add(canvas, BorderLayout.CENTER);
-
-    }
-
 
     private void initIntroScreen() {
         introScreen = new JPanel();
@@ -194,6 +111,117 @@ public class GUIBoard extends JFrame {
         add(introScreen, BorderLayout.CENTER);
     }
 
+    private void initMainScreen() {
+        mainScreen = new JPanel(new BorderLayout());
+        ImageIcon headerIcon = new ImageIcon("src/main/resources/images/headerLogo.png");
+        resizeIcon(headerIcon, 50, 50);
+        JPanel header = new JPanel();
+        JLabel label = new JLabel("DrawSync", headerIcon, SwingConstants.CENTER);
+        label.setFont(new Font("Impact", Font.PLAIN, 44));
+        label.setIconTextGap(15);
+        header.setBackground(new Color(.45f, .45f, .45f, 1));
+        header.add(label);
+
+        ImageIcon sendIcon = new ImageIcon("src/main/resources/images/sendIcon.png");
+        resizeIcon(sendIcon, 25, 25);
+        JPanel chat = new JPanel();
+        chat.setBackground(Color.RED);
+        chat.setLayout(new BoxLayout(chat, BoxLayout.Y_AXIS));
+        chatText = new JTextArea("CHAT ROOM");
+        chatText.setMargin(new Insets(5, 5, 5, 5));
+        chatText.setFont(getSegoeFont());
+        chatText.setEditable(false);
+        chatText.setLineWrap(true);
+        JScrollPane chatScroll = new JScrollPane(chatText, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        chatScroll.setPreferredSize(new Dimension(0, 150));
+        JPanel chatInput = new JPanel();
+        chatInput.setLayout(new BoxLayout(chatInput, BoxLayout.X_AXIS));
+        chat.setLayout(new BoxLayout(chat, BoxLayout.Y_AXIS));
+        textInput = new JTextField(10);
+        textInput.setToolTipText("Insert your message");
+        sendButton = new JButton(sendIcon);
+        sendButton.setFocusable(false);
+        chatInput.add(textInput);
+        chatInput.add(sendButton);
+        chat.add(chatScroll);
+        chat.add(chatInput);
+
+        users = new JTextArea();
+        users.setFont(getSegoeFont());
+        JScrollPane usersScroll = new JScrollPane(users, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        usersScroll.setPreferredSize(new Dimension(180, 0));
+        users.setEditable(false);
+        users.setLineWrap(true);
+        users.setBackground(Color.lightGray);
+        users.setMargin(new Insets(5, 5, 5, 5));
+
+        JPanel canvasOptions = getCanvasOptions();
+
+        canvasContainer = new JPanel();
+        canvasContainer.setBackground(new Color(.61f, .61f, .61f, 1));
+        canvas = new Canvas();
+        canvasContainer.add(canvas);
+        canvasContainer.setDoubleBuffered(true);
+        canvas.setStroke(strokeSliderButton.getValue());
+
+        mainScreen.add(header, BorderLayout.NORTH);
+        mainScreen.add(usersScroll, BorderLayout.EAST);
+        mainScreen.add(chat, BorderLayout.SOUTH);
+        mainScreen.add(canvasOptions, BorderLayout.WEST);
+        mainScreen.add(canvasContainer, BorderLayout.CENTER);
+    }
+
+    private JPanel getCanvasOptions() {
+        JPanel canvasOptions = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
+        canvasOptions.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+        canvasOptions.setPreferredSize(new Dimension(100, 0));
+        JPanel sliderPanel = new JPanel();
+        JLabel sliderLabel = new JLabel("Brush Size");
+        sliderPanel.setPreferredSize(new Dimension(90, 60));
+        strokeSliderButton = new JSlider(0, 100, 10);
+        strokeSliderButton.setPreferredSize(new Dimension(90, 32));
+        sliderPanel.add(sliderLabel);
+        sliderPanel.add(strokeSliderButton);
+        strokeSliderButton.setPaintLabels(true);
+        Hashtable labelTable = new Hashtable();
+        labelTable.put(0, new JLabel("\u2022"));
+        labelTable.put((int) (100 / 3.2), new JLabel("\u26AB"));
+        labelTable.put((int) (100 / 1.5), new JLabel("\u25CF"));
+        labelTable.put(100, new JLabel("\u2B24"));
+        strokeSliderButton.setLabelTable(labelTable);
+        clearButton = createCanvasButton("src/main/resources/images/clearIcon.png");
+        colorButton = createCanvasButton("src/main/resources/images/colorIcon.png");
+        lineButton = createCanvasButton("src/main/resources/images/lineIcon.png");
+        JButton textButton = createCanvasButton("src/main/resources/images/textIcon.png");
+        brushButton = createCanvasButton("src/main/resources/images/brushIcon.png");
+        JButton shapesButton = createCanvasButton("src/main/resources/images/shapesIcon.png");
+        JButton undoButton = createCanvasButton("src/main/resources/images/undoIcon.png");
+        JButton redoButton = createCanvasButton("src/main/resources/images/redoIcon.png");
+        JButton saveButton = createCanvasButton("src/main/resources/images/saveIcon.png");
+        eraserButton = createCanvasButton("src/main/resources/images/eraserIcon.png");
+        canvasOptions.add(colorButton);
+        canvasOptions.add(lineButton);
+        canvasOptions.add(textButton);
+        canvasOptions.add(brushButton);
+        canvasOptions.add(shapesButton);
+        canvasOptions.add(eraserButton);
+        canvasOptions.add(sliderPanel);
+        canvasOptions.add(undoButton);
+        canvasOptions.add(redoButton);
+        canvasOptions.add(saveButton);
+        canvasOptions.add(clearButton);
+        return canvasOptions;
+    }
+
+    private JButton createCanvasButton(String filename) {
+        ImageIcon icon = new ImageIcon(filename);
+        JButton button = new JButton(icon);
+        resizeIcon(icon, 25, 25);
+        button.setMargin(new Insets(1, 1, 1, 1));
+        button.setFocusable(false);
+        return button;
+    }
+
     private void initFrame(String title, int width, int height) {
         setTitle(title);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -208,6 +236,40 @@ public class GUIBoard extends JFrame {
     public void addEventListeners() {
         createButtonsListener();
         createInputListeners();
+        canvasContainer.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                if (e.getButton() == 3) {
+                    changeMode(Mode.MOVING);
+                    canvas.setMouseX(e.getX());
+                    canvas.setMouseY(e.getY());
+                    canvasContainer.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                if (e.getButton() == 3) {
+                    canvasContainer.setCursor(Cursor.getDefaultCursor());
+                    canvas.setMode(canvas.getLastMode());
+                }
+            }
+        });
+        canvasContainer.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
+                if (canvas.getMode() == Mode.MOVING) {
+                    int diffX = e.getX() - canvas.getMouseX();
+                    int diffY = e.getY() - canvas.getMouseY();
+                    canvas.setMouseX(e.getX());
+                    canvas.setMouseY(e.getY());
+                    canvas.setLocation(canvas.getX() + diffX, canvas.getY() + diffY);
+                }
+            }
+        });
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -227,6 +289,13 @@ public class GUIBoard extends JFrame {
                         throw new RuntimeException(ex);
                     }
                 }
+            }
+        });
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                canvas.doInit(true);
             }
         });
     }
@@ -277,15 +346,15 @@ public class GUIBoard extends JFrame {
     }
 
     private void createMainButtonsListeners() {
-        clearButton.addActionListener(b -> {
-            canvas.clear();
-        });
+        clearButton.addActionListener(b -> canvas.clear());
         colorButton.addActionListener(b -> {
-            Color color = JColorChooser.showDialog(null, "Pick a Color", canvas.getColor(), true);
+            Color color = JColorChooser.showDialog(null, "Pick your drawing Color", canvas.getColor(), false);
             if (color != null) {
                 canvas.setColor(color);
             }
         });
+        brushButton.addActionListener(b -> changeMode(Mode.DRAWER));
+        eraserButton.addActionListener(b -> changeMode(Mode.ERASER));
         sendButton.addActionListener(b -> {
             try {
                 sendMessage(!textInput.getText().isEmpty());
@@ -299,6 +368,11 @@ public class GUIBoard extends JFrame {
                 canvas.setStroke(Math.max(2, slider.getValue()));
             }
         });
+    }
+
+    private void changeMode(Mode mode) {
+        canvas.setLastMode(canvas.getMode());
+        canvas.setMode(mode);
     }
 
     private void createIntroButtonsListeners() {
