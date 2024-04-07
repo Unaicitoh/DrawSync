@@ -39,9 +39,9 @@ public class GUIBoard extends JFrame {
     private JButton colorButton;
     private JSlider strokeSliderButton;
     private JButton lineButton;
-    private JPanel canvasContainer;
     private JButton eraserButton;
     private JButton brushButton;
+    private JPanel canvasContainer;
 
     public GUIBoard(String title, int width, int height) {
         initFrame(title, width, height);
@@ -159,11 +159,10 @@ public class GUIBoard extends JFrame {
 
         canvasContainer = new JPanel();
         canvasContainer.setBackground(new Color(.61f, .61f, .61f, 1));
+        canvasContainer.setDoubleBuffered(true);
         canvas = new Canvas();
         canvasContainer.add(canvas);
-        canvasContainer.setDoubleBuffered(true);
         canvas.setStroke(strokeSliderButton.getValue());
-
         mainScreen.add(header, BorderLayout.NORTH);
         mainScreen.add(usersScroll, BorderLayout.EAST);
         mainScreen.add(chat, BorderLayout.SOUTH);
@@ -236,45 +235,18 @@ public class GUIBoard extends JFrame {
     public void addEventListeners() {
         createButtonsListener();
         createInputListeners();
-        canvasContainer.addMouseListener(new MouseAdapter() {
+        createCanvasContainerListeners();
+        addComponentListener(new ComponentAdapter() {
             @Override
-            public void mousePressed(MouseEvent e) {
-                super.mousePressed(e);
-                if (e.getButton() == 3) {
-                    changeMode(Mode.MOVING);
-                    canvas.setMouseX(e.getX());
-                    canvas.setMouseY(e.getY());
-                    canvasContainer.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
-                }
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                super.mouseReleased(e);
-                if (e.getButton() == 3) {
-                    canvasContainer.setCursor(Cursor.getDefaultCursor());
-                    canvas.setMode(canvas.getLastMode());
-                }
-            }
-        });
-        canvasContainer.addMouseMotionListener(new MouseMotionAdapter() {
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                super.mouseDragged(e);
-                if (canvas.getMode() == Mode.MOVING) {
-                    int diffX = e.getX() - canvas.getMouseX();
-                    int diffY = e.getY() - canvas.getMouseY();
-                    canvas.setMouseX(e.getX());
-                    canvas.setMouseY(e.getY());
-                    canvas.setLocation(canvas.getX() + diffX, canvas.getY() + diffY);
-                }
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                canvas.doInit(true);
             }
         });
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-
                 if (isServer && server != null) {
                     ServerManager.broadcastMessage(Message.buildMessage(ActionType.SERVER_CLOSING, username.getText() + " left the room. Server closed."));
                     try {
@@ -289,13 +261,6 @@ public class GUIBoard extends JFrame {
                         throw new RuntimeException(ex);
                     }
                 }
-            }
-        });
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                super.componentResized(e);
-                canvas.doInit(true);
             }
         });
     }
@@ -425,6 +390,44 @@ public class GUIBoard extends JFrame {
                 server = new ServerManager(port);
                 server.startServer(this);
                 isServer = true;
+            }
+        });
+    }
+
+    private void createCanvasContainerListeners() {
+        canvasContainer.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                if (e.getButton() == 3) {
+                    canvas.setLastMode(canvas.getMode());
+                    canvas.setMode(Mode.MOVING);
+                    canvas.setMouseX(e.getX());
+                    canvas.setMouseY(e.getY());
+                    setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                if (e.getButton() == 3) {
+                    setCursor(Cursor.getDefaultCursor());
+                    canvas.setMode(canvas.getLastMode());
+                }
+            }
+        });
+        canvasContainer.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
+                if (canvas.getMode() == Mode.MOVING) {
+                    int diffX = e.getX() - canvas.getMouseX();
+                    int diffY = e.getY() - canvas.getMouseY();
+                    canvas.setMouseX(e.getX());
+                    canvas.setMouseY(e.getY());
+                    canvas.setLocation(canvas.getX() + diffX, canvas.getY() + diffY);
+                }
             }
         });
     }
