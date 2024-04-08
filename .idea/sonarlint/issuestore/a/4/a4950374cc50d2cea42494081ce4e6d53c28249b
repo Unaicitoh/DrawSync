@@ -1,28 +1,24 @@
 
 “
-java:S1301e"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8Èğ’·ë1J$7c04833d-dc8a-4aec-9c84-04cad58f6686
+java:S1301l"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8ÎÅŒÍë1J$1b4c0caa-64ee-4797-b5e9-abd83019a64d
 
-java:S1301q"KReplace this "switch" statement by "if" statements to increase readability.(Ñ€¬¸8Èğ’·ë1J$096967a2-958f-4fc3-ada4-8e5b7c438505
+java:S1301x"KReplace this "switch" statement by "if" statements to increase readability.(Ñ€¬¸8ÎÅŒÍë1J$7829f526-3511-4233-9fd4-f8c5f94ae92d
 ”
-java:S1301‚"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8Èğ’·ë1J$c315a123-1c4a-481c-a2e8-c59e462e01c9
+java:S1301‰"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8ÎÅŒÍë1J$6b6d719d-91a0-40a1-b22f-42febaa37b60
 j
-java:S1948"'Make "image" transient or serializable.(ğã’8ßğ’·ë1J$a60f8a2a-836c-4e2e-9757-d3149d1eb0c7
-z
-java:S1135""2Complete the task associated to this TODO comment.(¡›Ş»ûÿÿÿÿ8áğ’·ë1J$dbddf765-86ed-4cd4-b63b-dcc93333519f
+java:S1948"'Make "image" transient or serializable.(ğã’8÷ÅŒÍë1J$91482d08-d424-484c-8e70-7acc59889b46
 €
-java:S18542"8Remove this useless assignment to local variable "rect".(ÀÓï’şÿÿÿÿ8âğ’·ë1J$979ed627-1d70-4055-870f-65402279d97c
+java:S18542"8Remove this useless assignment to local variable "rect".(ÀÓï’şÿÿÿÿ8ûÅŒÍë1J$d38bb6a6-ffaa-4890-a521-15aab9e01f00
 q
-java:S14812")Remove this unused "rect" local variable.(ÀÓï’şÿÿÿÿ8ãğ’·ë1J$ce065422-4c53-4f59-98d9-6b9d828cf15b
-~	java:S1253"<This block of commented-out lines of code should be removed.(‘ÒÙ8ãğ’·ë1J$20e70de7-0673-4aa9-8385-b874a3160a74
-r	java:S106="+Replace this use of System.out by a logger.(ÊëøÊıÿÿÿÿ8ÂÑú·ë1J$903434c4-82c1-437a-807a-c358a2747b07
-~	java:S125E"<This block of commented-out lines of code should be removed.(°ÊğŸ8äğ’·ë1J$6beadf25-2b4b-43ee-bc82-a2282883439d
+java:S14812")Remove this unused "rect" local variable.(ÀÓï’şÿÿÿÿ8ûÅŒÍë1J$7b104ed6-e0ea-4983-b3e0-a5658fd51f32
+~	java:S1253"<This block of commented-out lines of code should be removed.(‘ÒÙ8ûÅŒÍë1J$90a3b03f-e1d8-469a-a530-45b298a3b808
+•
+java:S3776:"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(³ıŸê8üÅŒÍë1J$19702e5d-2f95-4fa1-bc02-f382778b1d52
 ”
-java:S3776V"RRefactor this method to reduce its Cognitive Complexity from 32 to the 15 allowed.(é¾¶{8äğ’·ë1J$53ae95d1-8603-4dd6-a50d-96d2c70e75c0
- 	java:S131e"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8æğ’·ë1J$da03af68-6d8b-449f-b703-a9bebd91cc2a
-›	java:S131q"YComplete cases by adding the missing enum constants or add a default case to this switch.(Ñ€¬¸8æğ’·ë1J$e1a17c62-0948-417e-a71d-00c9483b524c
-¡	java:S131‚"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8çğ’·ë1J$d67bd009-21bf-4618-bbf6-9d48746f7c8f
-¡	java:S131—"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8çğ’·ë1J$0671cfe4-cdb0-472e-ab83-1202270ff045
-–
-java:S1871°"MThis branch's code block is the same as the block for the branch on line 174.(¤¦¿ºøÿÿÿÿ8 ºİ·ë1J$021a82e7-f96a-4876-8f9d-77a904eafca0
+java:S3776]"RRefactor this method to reduce its Cognitive Complexity from 24 to the 15 allowed.(é¾¶{8ÿÅŒÍë1J$fc103564-26de-44d2-90a9-d8bac3e5f4da
+ 	java:S131l"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8€ÆŒÍë1J$9867864c-c46a-47eb-8305-fcbcc9e41903
+›	java:S131x"YComplete cases by adding the missing enum constants or add a default case to this switch.(Ñ€¬¸8€ÆŒÍë1J$2c647cf8-478a-4e30-93e2-7fedc92d00bb
+¡	java:S131‰"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8ÆŒÍë1J$baea0cb8-8fff-4417-bc58-2b88841818fc
+¡	java:S131"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8‚ÆŒÍë1J$34ede992-d30b-498a-a35e-1c86170a4b4e
 r
-java:S1068"*Remove this unused "shapes" private field.(ç¤Ä…ûÿÿÿÿ8¢¹·ë1J$5df576bb-709e-453e-93ea-89df0eff7d14
+java:S1068"*Remove this unused "shapes" private field.(ç¤Ä…ûÿÿÿÿ8‡ÆŒÍë1J$461577b6-24f9-4687-a412-ad639a0bb363

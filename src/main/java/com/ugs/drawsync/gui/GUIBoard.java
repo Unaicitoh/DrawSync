@@ -5,11 +5,17 @@ import com.ugs.drawsync.server.ClientHandler;
 import com.ugs.drawsync.server.Message;
 import com.ugs.drawsync.server.ServerManager;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileView;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Hashtable;
@@ -42,6 +48,9 @@ public class GUIBoard extends JFrame {
     private JButton eraserButton;
     private JButton brushButton;
     private JPanel canvasContainer;
+    private JButton saveButton;
+    private JFileChooser fileChooser;
+    private int savedCont = 1;
 
     public GUIBoard(String title, int width, int height) {
         initFrame(title, width, height);
@@ -196,7 +205,8 @@ public class GUIBoard extends JFrame {
         JButton shapesButton = createCanvasButton("src/main/resources/images/shapesIcon.png");
         JButton undoButton = createCanvasButton("src/main/resources/images/undoIcon.png");
         JButton redoButton = createCanvasButton("src/main/resources/images/redoIcon.png");
-        JButton saveButton = createCanvasButton("src/main/resources/images/saveIcon.png");
+        saveButton = createCanvasButton("src/main/resources/images/saveIcon.png");
+        fileChooser = new JFileChooser();
         eraserButton = createCanvasButton("src/main/resources/images/eraserIcon.png");
         canvasOptions.add(colorButton);
         canvasOptions.add(lineButton);
@@ -313,13 +323,89 @@ public class GUIBoard extends JFrame {
     private void createMainButtonsListeners() {
         clearButton.addActionListener(b -> canvas.clear());
         colorButton.addActionListener(b -> {
-            Color color = JColorChooser.showDialog(null, "Pick your drawing Color", canvas.getColor(), false);
+            Color color = JColorChooser.showDialog(null, "Pick your drawing Color", canvas.getColor(), true);
             if (color != null) {
                 canvas.setColor(color);
             }
         });
         brushButton.addActionListener(b -> changeMode(Mode.DRAWER));
         eraserButton.addActionListener(b -> changeMode(Mode.ERASER));
+        saveButton.addActionListener(b -> {
+            fileChooser.resetChoosableFileFilters();
+            fileChooser.addPropertyChangeListener(JFileChooser.FILE_FILTER_CHANGED_PROPERTY, e -> {
+                JTextField fileNameInput = getFileNameTextField(fileChooser);
+                if (e.getNewValue() != null && e.getNewValue().toString().contains("FileNameExtensionFilter") && fileNameInput != null) {
+                    String format = e.getNewValue().toString();
+                    File selectedDir = fileChooser.getCurrentDirectory();
+                    System.out.println(e.getNewValue());
+                    if (selectedDir != null) {
+                        String fileName = fileNameInput.getText();
+                        if (fileName.contains(".")) {
+                            fileName = fileName.substring(0, fileName.lastIndexOf("."));
+                        }
+                        if (fileName.isEmpty() && savedCont == 1) {
+                            fileName = "MyPicture";
+                        } else if (fileName.isEmpty() || savedCont >= 2) {
+                            fileName = "MyPicture" + savedCont;
+                        }
+                        fileChooser.setSelectedFile(new File(fileName + "." + format.substring(format.indexOf("=") + 1, format.indexOf(" extensions")).toLowerCase()));
+                    }
+                }
+
+
+            });
+            fileChooser.setAcceptAllFileFilterUsed(false);
+            fileChooser.setFileFilter(new FileFilter() {
+                @Override
+                public boolean accept(File f) {
+                    return f.isDirectory();
+                }
+
+                @Override
+                public String getDescription() {
+                    return null;
+                }
+            });
+            fileChooser.setFileFilter(new FileNameExtensionFilter("JPEG", "jpg", "jpeg"));
+            fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("JPG", "jpg", "jpeg"));
+            fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("PNG", "png"));
+            fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("GIF", "gif"));
+            fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("BMP", "bmp"));
+            fileChooser.setFileView(new FileView() {
+                @Override
+                public Icon getIcon(File f) {
+                    ImageIcon icon = new ImageIcon("src/main/resources/images/folderIcon.png");
+                    resizeIcon(icon, 16, 16);
+                    return icon;
+                }
+            });
+            int savingResult = fileChooser.showSaveDialog(this);
+            if (savingResult == 0) {
+                File f = fileChooser.getSelectedFile();
+                if (f.getPath().contains(".") && (f.getName().substring(0, f.getName().lastIndexOf(".")).isEmpty())) {
+                    JOptionPane.showMessageDialog(this, "The File must have a Name to be saved", "Empty file name", JOptionPane.ERROR_MESSAGE);
+                    saveButton.doClick();
+                    return;
+                }
+                String type = fileChooser.getFileFilter().getDescription().toLowerCase();
+                BufferedImage image = canvas.getImage();
+                if (type.equals("jpeg") || type.equals("jpg") || type.equals("bmp")) {
+                    image = new BufferedImage(canvas.getImage().getWidth(), canvas.getImage().getHeight(), BufferedImage.TYPE_INT_RGB);
+                    Graphics2D g = (Graphics2D) image.getGraphics();
+                    g.setColor(Color.WHITE);
+                    g.fillRect(0, 0, image.getWidth(), image.getHeight());
+                    g.drawImage(canvas.getImage(), 0, 0, null);
+                }
+                try {
+                    ImageIO.write(image, type, new File(f.getPath()));
+                    savedCont++;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        });
+
         sendButton.addActionListener(b -> {
             try {
                 sendMessage(!textInput.getText().isEmpty());
@@ -333,6 +419,18 @@ public class GUIBoard extends JFrame {
                 canvas.setStroke(Math.max(2, slider.getValue()));
             }
         });
+    }
+
+    private JTextField getFileNameTextField(Container fileChooser) {
+        for (Component c : fileChooser.getComponents()) {
+            if (c instanceof JTextField comp) {
+                return comp;
+            } else if (c instanceof Container cont) {
+                JTextField textField = getFileNameTextField((cont));
+                if (textField != null) return textField;
+            }
+        }
+        return null;
     }
 
     private void changeMode(Mode mode) {
@@ -428,6 +526,24 @@ public class GUIBoard extends JFrame {
                     canvas.setMouseY(e.getY());
                     canvas.setLocation(canvas.getX() + diffX, canvas.getY() + diffY);
                 }
+            }
+        });
+        canvasContainer.addMouseWheelListener(e -> {
+            if (!canvas.isPressed()) {
+                if ((canvas.getZoom() == .5 && e.getWheelRotation() == 1) || (canvas.getZoom() == 10 && e.getWheelRotation() == -1)) {
+                    return;
+                }
+                canvas.setParentMousePos(getMousePosition(true));
+                canvas.setLastPost(canvas.getLocation());
+                canvas.setLastSize(canvas.getSize());
+                canvas.doInit(true);
+                canvas.setZoom(canvas.getZoom() - e.getWheelRotation() * .05f);
+                canvas.setZoom(Math.max(.5, Math.min(10, canvas.getZoom())));
+                int newWidth = (int) (canvas.getImage().getWidth() * canvas.getZoom());
+                int newHeight = (int) (canvas.getImage().getHeight() * canvas.getZoom());
+                canvas.setPreferredSize(new Dimension(newWidth, newHeight));
+                canvas.revalidate();
+                canvas.repaint();
             }
         });
     }

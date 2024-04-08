@@ -64,5 +64,3 @@ e
 -src/main/java/com/ugs/drawsync/gui/Shape.java,f\9\f91e5bb2007f9e9e87720e718036d15bc40fafcf
 \
 ,src/main/java/com/ugs/drawsync/gui/Mode.java,3\a\3a80be5a0e4ace825437082c17db92b680652da4
-g
-7src/main/java/com/ugs/drawsync/gui/CanvasContainer.java,9\3\936ca186de795533d94a330224d75a899a5d20a0

@@ -1,22 +1,26 @@
 
-	java:S112ÿ"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8øã¶ë1J$f2c46f44-2ed7-4119-8ab5-df9137e3ac7f
-	java:S112…"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8øã¶ë1J$5f3b9e6b-ed03-4284-8205-9c3592602c01
-	java:S112®"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8øã¶ë1J$7c6ba954-650a-4fc5-bfe1-29d15d82c744
-	java:S112Ç"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8øã¶ë1J$9870fec8-9aa9-44ea-a015-a885609e99ca
-	java:S112í"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8øã¶ë1J$846edddd-fd3e-4bf4-b7ff-1a6f096f96af
+	java:S112‰"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8ûÃùØë1J$65420326-cfbb-448d-8939-6bab8a79520e
+	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8ûÃùØë1J$85ca9d32-3dea-4899-93b7-8b41d83e30b3
+	java:S112¸"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8ûÃùØë1J$3e0f5820-ef3b-4372-9095-39ead18f470f
+	java:S112“"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ûÃùØë1J$19b150da-e0a4-41d5-bf2b-4c38cb9a730f
+	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ûÃùØë1J$8afc9fe5-2495-45c7-aa82-477b1e2554d0
+	java:S112Ï"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ûÃùØë1J$7f5d4810-5063-4030-87d0-7586142cb0bb
 x
-java:S3740¹"/Provide the parametrized type for this generic.(æŸúšúÿÿÿÿ8øã¶ë1J$74b50e57-15d5-40e3-8619-b297c77d8aca
+java:S3740Â"/Provide the parametrized type for this generic.(æŸúšúÿÿÿÿ8ûÃùØë1J$d7d78524-74bb-4b7d-9ee2-43b57383e01f
 x
-java:S3740¹"/Provide the parametrized type for this generic.(æŸúšúÿÿÿÿ8ùã¶ë1J$e77b5962-a0d1-47af-ae0b-900cb0e99bd9
+java:S3740Â"/Provide the parametrized type for this generic.(æŸúšúÿÿÿÿ8ûÃùØë1J$0844122f-6dcb-41d4-b4cd-6f6d7ae5a80c
 œ
-java:S1450)"YRemove the "lineButton" field and declare it as a local variable in the relevant methods.(Òª©É8ã¶ë1J$6b4a81dc-e225-487d-adc3-315f2c40ad46
+java:S1450/"YRemove the "lineButton" field and declare it as a local variable in the relevant methods.(Òª©É8›ÄùØë1J$17ddf41a-376c-4ee8-8b9a-ef2170bd2ac9
 Ÿ
-java:S1149¹"VReplace the synchronized class "Hashtable" by an unsynchronized one such as "HashMap".(æŸúšúÿÿÿÿ8ã¶ë1J$b9c41db4-4a96-4851-971e-41bf8108cfe9
+java:S1149Â"VReplace the synchronized class "Hashtable" by an unsynchronized one such as "HashMap".(æŸúšúÿÿÿÿ8œÄùØë1J$ab5a29a9-6fce-4768-ae4b-c19bb415e721
 ›
-java:S3776×"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(£°É¬ÿÿÿÿÿ8¡ã¶ë1J$854ecd48-ab50-4fc2-93be-76a0ce162e08
+java:S3776Ã"RRefactor this method to reduce its Cognitive Complexity from 40 to the 15 allowed.(¦şËÍÿÿÿÿÿ8¬ÄùØë1J$1208b86e-88ef-4e47-a08b-42da6e6bae4a
+m	java:S106Ô"+Replace this use of System.out by a logger.(•şáz8õ¨›Úë1J$a1a39f0e-aca0-4e81-9f1e-3bf9606471f3
+›
+java:S3776¹"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(£°É¬ÿÿÿÿÿ8³ÄùØë1J$a78f5c1a-4f0d-49e4-a93d-9165da79a130
 m
-java:S2140…")Use "java.util.Random.nextInt()" instead.(Ø£“á8¤ã¶ë1J$4a1fd893-5acd-472b-8d51-bdf8d2a0de63
+java:S2140ç")Use "java.util.Random.nextInt()" instead.(Ø£“á8¶ÄùØë1J$3ed93797-70ea-40aa-b46f-c867dd75821b
 €
-java:S6019Ú"<Remove the '?' from this unnecessarily reluctant quantifier.(ÀÂÄ€8¨ã¶ë1J$7a7b33aa-bb60-46b2-9ce1-ecb973a70562
+java:S6019¼"<Remove the '?' from this unnecessarily reluctant quantifier.(ÀÂÄ€8»ÄùØë1J$6705b7f3-fa3f-47d1-8274-c7e81209eb1b
 ˜
-java:S5843Ú"TSimplify this regular expression to reduce its complexity from 23 to the 20 allowed.(ÀÂÄ€8¨ã¶ë1J$10eea1b3-7a58-42d3-93c2-0c04062f37aa
+java:S5843¼"TSimplify this regular expression to reduce its complexity from 23 to the 20 allowed.(ÀÂÄ€8»ÄùØë1J$48ab01ee-73b6-46e5-8c36-1546d41815a3

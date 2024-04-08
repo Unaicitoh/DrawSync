@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseWheelEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -28,21 +27,22 @@ public class Canvas extends JPanel {
     private final Cursor eraserCursor;
     private double zoom = 1f;
     private Point lastPost;
+    private Dimension lastSize;
     private boolean isPressed;
+    private Point parentMousePos;
 
     public Canvas() {
-        //TODO ZOOM, BUTTONS
         shapes = new ArrayList<>();
         color = Color.BLACK;
         mode = Mode.DRAWER;
         image = new BufferedImage(CANVAS_SIZE, CANVAS_SIZE, BufferedImage.TYPE_INT_ARGB);
-        setPreferredSize(new Dimension(CANVAS_SIZE, CANVAS_SIZE));
+        image.setAccelerationPriority(1);
         setDoubleBuffered(true);
+        setPreferredSize(new Dimension(CANVAS_SIZE, CANVAS_SIZE));
         eraserCursor = Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("src/main/resources/images/eraserIcon.png").getImage(), new Point(10, 30), "EraserCursor");
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         setBackground(Color.WHITE);
         addEventListeners();
-
     }
 
     private void drawShape(Color color, int x, int y, int w, int h) {
@@ -56,18 +56,26 @@ public class Canvas extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g.create();
+        Graphics2D g2d = (Graphics2D) g;
         super.paintComponent(g2d);
-        System.out.println(zoom);
         if (doInit) {
             Point p;
+            Container container = getParent();
             if (!isInit) {
                 p = getLocation();
-                setLocation(p.x, p.y + getParent().getSize().height / 2 - getSize().height / 2);
+                setLocation(p.x, p.y + container.getSize().height / 2 - getSize().height / 2);
             }
-            if (isInit) {
-//              setLocation((int) (getParent().getWidth()/2f+getParent().getX()+getX()-finalX), (int) (getParent().getY()+getY()-finalY));
-                setLocation(lastPost.x, lastPost.y);
+            Point mousePos = parentMousePos;
+            if (isInit && mousePos != null) {
+                if (mousePos.x < container.getWidth() / 2 && mousePos.y < container.getHeight() / 2) {
+                    setLocation(lastPost.x, lastPost.y);
+                } else if (mousePos.x > container.getWidth() / 2 && mousePos.y > container.getHeight() / 2) {
+                    setLocation((int) (lastPost.x - (getWidth() - lastSize.getWidth())), (int) (lastPost.y - (getHeight() - lastSize.getHeight())));
+                } else if (mousePos.x < container.getWidth() / 2 && mousePos.y > container.getHeight() / 2) {
+                    setLocation(lastPost.x, (int) (lastPost.y - (getHeight() - lastSize.getHeight())));
+                } else if (mousePos.x > container.getWidth() / 2 && mousePos.y < container.getHeight() / 2) {
+                    setLocation((int) (lastPost.x - (getWidth() - lastSize.getWidth())), lastPost.y);
+                }
             }
             if (!isInit) {
                 isInit = !isInit;
@@ -80,7 +88,6 @@ public class Canvas extends JPanel {
             AffineTransform at = AffineTransform.getScaleInstance(zoom, zoom);
             g2d.drawImage(image, at, null);
         }
-
     }
 
     private void addEventListeners() {
@@ -167,36 +174,13 @@ public class Canvas extends JPanel {
                 }
             }
         });
-        addMouseWheelListener(new MouseAdapter() {
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent e) {
-                if (!isPressed) {
-                    if (zoom == 1 && e.getWheelRotation() == 1) {
-                        return;
-                    } else if (zoom == 10 && e.getWheelRotation() == -1) {
-                        return;
-                    }
-                    lastPost = getLocation();
-                    doInit = true;
-                    zoom -= e.getWheelRotation() * .05f;
-                    zoom = Math.max(1, Math.min(10, zoom));
-                    int newWidth = (int) (image.getWidth() * zoom);
-                    int newHeight = (int) (image.getHeight() * zoom);
-                    setPreferredSize(new Dimension(newWidth, newHeight));
-                    revalidate();
-                    repaint();
-                }
-            }
-        });
+
     }
 
     public void clear() {
         Graphics2D g = image.createGraphics();
-        g.setBackground(new Color(0, 0, 0, 0));
+        g.setBackground(new Color(1, 1, 1, 1));
         g.clearRect(0, 0, image.getWidth(),
-                image.getHeight());
-        g.setColor(new Color(0, 0, 0, 0));
-        g.fillRect(0, 0, image.getWidth(),
                 image.getHeight());
         repaint();
         g.dispose();
@@ -258,7 +242,34 @@ public class Canvas extends JPanel {
         this.doInit = doInit;
     }
 
-    public boolean doInit() {
-        return doInit;
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public double getZoom() {
+        return zoom;
+    }
+
+    public void setZoom(double zoom) {
+        this.zoom = zoom;
+    }
+
+    public void setLastPost(Point lastPost) {
+        this.lastPost = lastPost;
+    }
+
+    public boolean isPressed() {
+        return isPressed;
+    }
+
+
+    public void setLastSize(Dimension lastSize) {
+        this.lastSize = lastSize;
+    }
+
+
+    public void setParentMousePos(Point parentMousePos) {
+        this.parentMousePos = parentMousePos;
     }
 }
