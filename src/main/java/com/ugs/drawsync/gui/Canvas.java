@@ -2,9 +2,7 @@ package com.ugs.drawsync.gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -12,7 +10,7 @@ import java.util.List;
 
 public class Canvas extends JPanel {
 
-    public static final int CANVAS_SIZE = 1000;
+    public static final int CANVAS_SIZE = 1500;
     private List<Shape> shapes;
     private Color color;
     private int stroke = 5;
@@ -20,13 +18,14 @@ public class Canvas extends JPanel {
     private int mouseY;
     private boolean doInit;
     private boolean isInit;
+    private int drawingType;
     private Mode mode;
     private Mode lastMode;
     private BufferedImage image;
     private boolean canInteract;
     private final Cursor eraserCursor;
     private double zoom = 1f;
-    private Point lastPost;
+    private Point lastPos;
     private Dimension lastSize;
     private boolean isPressed;
     private Point parentMousePos;
@@ -49,9 +48,24 @@ public class Canvas extends JPanel {
         Graphics2D g2d = setupImageGraphics();
         Shape rect = new Shape(color, x, y, w, h);
 //        shapes.add(rect);
-        g2d.setColor(color);
-        g2d.fillArc(x, y, w, h, 0, 360);
+        switch (mode) {
+            case DRAWER -> {
+                switch (drawingType) {
+                    case 0 -> color = new Color(color.getRed(), color.getGreen(), color.getBlue(), 1);
+                    case 1 -> color = new Color(color.getRed(), color.getGreen(), color.getBlue(), .2f);
+                }
+                g2d.setColor(color);
+                g2d.fillArc(x, y, w, h, 0, 360);
+            }
+            case ERASER -> {
+                Composite comp = g2d.getComposite();
+                g2d.setComposite(AlphaComposite.Clear);
+                g2d.fillArc(x, y, w, h, 0, 360);
+                g2d.setComposite(comp);
+            }
+        }
         repaint();
+        g2d.dispose();
     }
 
     @Override
@@ -64,17 +78,18 @@ public class Canvas extends JPanel {
             if (!isInit) {
                 p = getLocation();
                 setLocation(p.x, p.y + container.getSize().height / 2 - getSize().height / 2);
+                setLastPos(getLocation());
             }
             Point mousePos = parentMousePos;
             if (isInit && mousePos != null) {
                 if (mousePos.x < container.getWidth() / 2 && mousePos.y < container.getHeight() / 2) {
-                    setLocation(lastPost.x, lastPost.y);
+                    setLocation(lastPos.x, lastPos.y);
                 } else if (mousePos.x > container.getWidth() / 2 && mousePos.y > container.getHeight() / 2) {
-                    setLocation((int) (lastPost.x - (getWidth() - lastSize.getWidth())), (int) (lastPost.y - (getHeight() - lastSize.getHeight())));
+                    setLocation((int) (lastPos.x - (getWidth() - lastSize.getWidth())), (int) (lastPos.y - (getHeight() - lastSize.getHeight())));
                 } else if (mousePos.x < container.getWidth() / 2 && mousePos.y > container.getHeight() / 2) {
-                    setLocation(lastPost.x, (int) (lastPost.y - (getHeight() - lastSize.getHeight())));
+                    setLocation(lastPos.x, (int) (lastPos.y - (getHeight() - lastSize.getHeight())));
                 } else if (mousePos.x > container.getWidth() / 2 && mousePos.y < container.getHeight() / 2) {
-                    setLocation((int) (lastPost.x - (getWidth() - lastSize.getWidth())), lastPost.y);
+                    setLocation((int) (lastPos.x - (getWidth() - lastSize.getWidth())), lastPos.y);
                 }
             }
             if (!isInit) {
@@ -107,7 +122,7 @@ public class Canvas extends JPanel {
                     int y = (int) (e.getY() / zoom);
                     switch (mode) {
                         case DRAWER -> drawShape(color, x - stroke / 2, y - stroke / 2, stroke, stroke);
-                        case ERASER -> drawShape(Color.WHITE, x - stroke / 2, y - stroke / 2, stroke, stroke);
+                        case ERASER -> drawShape(null, x - stroke / 2, y - stroke / 2, stroke, stroke);
                     }
                 }
             }
@@ -116,6 +131,9 @@ public class Canvas extends JPanel {
             public void mouseReleased(MouseEvent e) {
                 isPressed = false;
                 super.mousePressed(e);
+                if (mode == Mode.MOVING) {
+                    setLastPos(getLocation());
+                }
                 if (e.getButton() == 3) {
                     switch (lastMode) {
                         case DRAWER -> {
@@ -174,22 +192,27 @@ public class Canvas extends JPanel {
                 }
             }
         });
-
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentMoved(ComponentEvent e) {
+                super.componentMoved(e);
+            }
+        });
     }
 
     public void clear() {
-        Graphics2D g = image.createGraphics();
-        g.setBackground(new Color(1, 1, 1, 1));
-        g.clearRect(0, 0, image.getWidth(),
-                image.getHeight());
+        Graphics2D g2d = image.createGraphics();
+        g2d.setBackground(new Color(0, 0, 0, 0));
+        g2d.clearRect(0, 0, image.getWidth(), image.getHeight());
         repaint();
-        g.dispose();
+        g2d.dispose();
     }
 
     private Graphics2D setupImageGraphics() {
         Graphics2D g2d = (Graphics2D) image.getGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
         return g2d;
     }
 
@@ -255,8 +278,8 @@ public class Canvas extends JPanel {
         this.zoom = zoom;
     }
 
-    public void setLastPost(Point lastPost) {
-        this.lastPost = lastPost;
+    public void setLastPos(Point lastPos) {
+        this.lastPos = lastPos;
     }
 
     public boolean isPressed() {
@@ -271,5 +294,13 @@ public class Canvas extends JPanel {
 
     public void setParentMousePos(Point parentMousePos) {
         this.parentMousePos = parentMousePos;
+    }
+
+    public Point getLastPos() {
+        return lastPos;
+    }
+
+    public void setDrawingType(int drawingType) {
+        this.drawingType = drawingType;
     }
 }

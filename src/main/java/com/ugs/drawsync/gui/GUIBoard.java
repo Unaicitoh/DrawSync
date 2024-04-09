@@ -46,11 +46,12 @@ public class GUIBoard extends JFrame {
     private JSlider strokeSliderButton;
     private JButton lineButton;
     private JButton eraserButton;
-    private JButton brushButton;
     private JPanel canvasContainer;
     private JButton saveButton;
     private JFileChooser fileChooser;
     private int savedCont = 1;
+    private JComboBox<ImageIcon> brushOptions;
+    private JPanel canvasOptions;
 
     public GUIBoard(String title, int width, int height) {
         initFrame(title, width, height);
@@ -164,12 +165,12 @@ public class GUIBoard extends JFrame {
         users.setBackground(Color.lightGray);
         users.setMargin(new Insets(5, 5, 5, 5));
 
-        JPanel canvasOptions = getCanvasOptions();
+        canvas = new Canvas();
+        canvasOptions = getCanvasOptions();
 
         canvasContainer = new JPanel();
-        canvasContainer.setBackground(new Color(.61f, .61f, .61f, 1));
         canvasContainer.setDoubleBuffered(true);
-        canvas = new Canvas();
+        canvasContainer.setOpaque(false);
         canvasContainer.add(canvas);
         canvas.setStroke(strokeSliderButton.getValue());
         mainScreen.add(header, BorderLayout.NORTH);
@@ -181,12 +182,17 @@ public class GUIBoard extends JFrame {
 
     private JPanel getCanvasOptions() {
         JPanel canvasOptions = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
+        canvasOptions.setBackground(new Color(.85f, .85f, .85f, 1));
         canvasOptions.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         canvasOptions.setPreferredSize(new Dimension(100, 0));
         JPanel sliderPanel = new JPanel();
         JLabel sliderLabel = new JLabel("Brush Size");
+        sliderLabel.setFont(getSegoeFont().deriveFont(Font.BOLD));
         sliderPanel.setPreferredSize(new Dimension(90, 60));
         strokeSliderButton = new JSlider(0, 100, 10);
+        strokeSliderButton.setBorder(null);
+        sliderPanel.setBackground(new Color(.85f, .85f, .85f, 1));
+        strokeSliderButton.setBackground(new Color(.85f, .85f, .85f, 1));
         strokeSliderButton.setPreferredSize(new Dimension(90, 32));
         sliderPanel.add(sliderLabel);
         sliderPanel.add(strokeSliderButton);
@@ -201,7 +207,15 @@ public class GUIBoard extends JFrame {
         colorButton = createCanvasButton("src/main/resources/images/colorIcon.png");
         lineButton = createCanvasButton("src/main/resources/images/lineIcon.png");
         JButton textButton = createCanvasButton("src/main/resources/images/textIcon.png");
-        brushButton = createCanvasButton("src/main/resources/images/brushIcon.png");
+        ImageIcon[] brushes = new ImageIcon[]{createBrushIcon("src/main/resources/images/penIcon.png"),
+                createBrushIcon("src/main/resources/images/brushIcon.png"),
+                createBrushIcon("src/main/resources/images/aquaBrushIcon.png"),
+                createBrushIcon("src/main/resources/images/metalPenIcon.png"),
+                createBrushIcon("src/main/resources/images/airBrushIcon.png")};
+        brushOptions = new JComboBox<>(brushes);
+        brushOptions.setRenderer(new ComboBoxRenderer());
+        brushOptions.setUI(new ComboBoxRenderer.CustomArrowUI(canvas));
+        brushOptions.setPreferredSize(new Dimension(33, 33));
         JButton shapesButton = createCanvasButton("src/main/resources/images/shapesIcon.png");
         JButton undoButton = createCanvasButton("src/main/resources/images/undoIcon.png");
         JButton redoButton = createCanvasButton("src/main/resources/images/redoIcon.png");
@@ -211,9 +225,9 @@ public class GUIBoard extends JFrame {
         canvasOptions.add(colorButton);
         canvasOptions.add(lineButton);
         canvasOptions.add(textButton);
-        canvasOptions.add(brushButton);
         canvasOptions.add(shapesButton);
         canvasOptions.add(eraserButton);
+        canvasOptions.add(brushOptions);
         canvasOptions.add(sliderPanel);
         canvasOptions.add(undoButton);
         canvasOptions.add(redoButton);
@@ -222,7 +236,7 @@ public class GUIBoard extends JFrame {
         return canvasOptions;
     }
 
-    private JButton createCanvasButton(String filename) {
+    public static JButton createCanvasButton(String filename) {
         ImageIcon icon = new ImageIcon(filename);
         JButton button = new JButton(icon);
         resizeIcon(icon, 25, 25);
@@ -238,8 +252,14 @@ public class GUIBoard extends JFrame {
         setLayout(new BorderLayout());
     }
 
-    public void resizeIcon(ImageIcon icon, int width, int height) {
+    private static void resizeIcon(ImageIcon icon, int width, int height) {
         icon.setImage(icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    }
+
+    private ImageIcon createBrushIcon(String src) {
+        ImageIcon icon = new ImageIcon(src);
+        resizeIcon(icon, 25, 25);
+        return icon;
     }
 
     public void addEventListeners() {
@@ -323,89 +343,18 @@ public class GUIBoard extends JFrame {
     private void createMainButtonsListeners() {
         clearButton.addActionListener(b -> canvas.clear());
         colorButton.addActionListener(b -> {
-            Color color = JColorChooser.showDialog(null, "Pick your drawing Color", canvas.getColor(), true);
+            Color color = JColorChooser.showDialog(null, "Pick your drawing Color", canvas.getColor(), false);
             if (color != null) {
                 canvas.setColor(color);
             }
         });
-        brushButton.addActionListener(b -> changeMode(Mode.DRAWER));
-        eraserButton.addActionListener(b -> changeMode(Mode.ERASER));
-        saveButton.addActionListener(b -> {
-            fileChooser.resetChoosableFileFilters();
-            fileChooser.addPropertyChangeListener(JFileChooser.FILE_FILTER_CHANGED_PROPERTY, e -> {
-                JTextField fileNameInput = getFileNameTextField(fileChooser);
-                if (e.getNewValue() != null && e.getNewValue().toString().contains("FileNameExtensionFilter") && fileNameInput != null) {
-                    String format = e.getNewValue().toString();
-                    File selectedDir = fileChooser.getCurrentDirectory();
-                    System.out.println(e.getNewValue());
-                    if (selectedDir != null) {
-                        String fileName = fileNameInput.getText();
-                        if (fileName.contains(".")) {
-                            fileName = fileName.substring(0, fileName.lastIndexOf("."));
-                        }
-                        if (fileName.isEmpty() && savedCont == 1) {
-                            fileName = "MyPicture";
-                        } else if (fileName.isEmpty() || savedCont >= 2) {
-                            fileName = "MyPicture" + savedCont;
-                        }
-                        fileChooser.setSelectedFile(new File(fileName + "." + format.substring(format.indexOf("=") + 1, format.indexOf(" extensions")).toLowerCase()));
-                    }
-                }
-
-
-            });
-            fileChooser.setAcceptAllFileFilterUsed(false);
-            fileChooser.setFileFilter(new FileFilter() {
-                @Override
-                public boolean accept(File f) {
-                    return f.isDirectory();
-                }
-
-                @Override
-                public String getDescription() {
-                    return null;
-                }
-            });
-            fileChooser.setFileFilter(new FileNameExtensionFilter("JPEG", "jpg", "jpeg"));
-            fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("JPG", "jpg", "jpeg"));
-            fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("PNG", "png"));
-            fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("GIF", "gif"));
-            fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("BMP", "bmp"));
-            fileChooser.setFileView(new FileView() {
-                @Override
-                public Icon getIcon(File f) {
-                    ImageIcon icon = new ImageIcon("src/main/resources/images/folderIcon.png");
-                    resizeIcon(icon, 16, 16);
-                    return icon;
-                }
-            });
-            int savingResult = fileChooser.showSaveDialog(this);
-            if (savingResult == 0) {
-                File f = fileChooser.getSelectedFile();
-                if (f.getPath().contains(".") && (f.getName().substring(0, f.getName().lastIndexOf(".")).isEmpty())) {
-                    JOptionPane.showMessageDialog(this, "The File must have a Name to be saved", "Empty file name", JOptionPane.ERROR_MESSAGE);
-                    saveButton.doClick();
-                    return;
-                }
-                String type = fileChooser.getFileFilter().getDescription().toLowerCase();
-                BufferedImage image = canvas.getImage();
-                if (type.equals("jpeg") || type.equals("jpg") || type.equals("bmp")) {
-                    image = new BufferedImage(canvas.getImage().getWidth(), canvas.getImage().getHeight(), BufferedImage.TYPE_INT_RGB);
-                    Graphics2D g = (Graphics2D) image.getGraphics();
-                    g.setColor(Color.WHITE);
-                    g.fillRect(0, 0, image.getWidth(), image.getHeight());
-                    g.drawImage(canvas.getImage(), 0, 0, null);
-                }
-                try {
-                    ImageIO.write(image, type, new File(f.getPath()));
-                    savedCont++;
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
+        brushOptions.addActionListener(b -> {
+            changeMode(Mode.DRAWER);
+            canvas.setDrawingType(brushOptions.getSelectedIndex());
+            System.out.println("location " + brushOptions.getLocation());
         });
-
+        eraserButton.addActionListener(b -> changeMode(Mode.ERASER));
+        saveButton.addActionListener(b -> openFileChooser());
         sendButton.addActionListener(b -> {
             try {
                 sendMessage(!textInput.getText().isEmpty());
@@ -417,6 +366,85 @@ public class GUIBoard extends JFrame {
             JSlider slider = (JSlider) e.getSource();
             if (!slider.getValueIsAdjusting()) {
                 canvas.setStroke(Math.max(2, slider.getValue()));
+            }
+        });
+    }
+
+    private void openFileChooser() {
+        configurateFileChooser();
+        int savingResult = fileChooser.showSaveDialog(this);
+        if (savingResult == 0) {
+            File f = fileChooser.getSelectedFile();
+            if (f.getPath().contains(".") && (f.getName().substring(0, f.getName().lastIndexOf(".")).isEmpty())) {
+                JOptionPane.showMessageDialog(null, "The File must have a Name to be saved", "Empty file name", JOptionPane.ERROR_MESSAGE);
+                saveButton.doClick();
+                return;
+            }
+            String type = fileChooser.getFileFilter().getDescription().toLowerCase();
+            BufferedImage image = canvas.getImage();
+            if (type.equals("jpeg") || type.equals("jpg") || type.equals("bmp")) {
+                image = new BufferedImage(canvas.getImage().getWidth(), canvas.getImage().getHeight(), BufferedImage.TYPE_INT_RGB);
+                Graphics2D g = (Graphics2D) image.getGraphics();
+                g.setColor(Color.WHITE);
+                g.fillRect(0, 0, image.getWidth(), image.getHeight());
+                g.drawImage(canvas.getImage(), 0, 0, null);
+            }
+            try {
+                ImageIO.write(image, type, new File(f.getPath()));
+                savedCont++;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void configurateFileChooser() {
+        fileChooser.resetChoosableFileFilters();
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.addPropertyChangeListener(JFileChooser.FILE_FILTER_CHANGED_PROPERTY, e -> {
+            JTextField fileNameInput = getFileNameTextField(fileChooser);
+            if (e.getNewValue() != null && e.getNewValue().toString().contains("FileNameExtensionFilter") && fileNameInput != null) {
+                String format = e.getNewValue().toString();
+                File selectedDir = fileChooser.getCurrentDirectory();
+                if (selectedDir != null) {
+                    String fileName = fileNameInput.getText();
+                    if (fileName.contains(".")) {
+                        fileName = fileName.substring(0, fileName.lastIndexOf("."));
+                    }
+                    String exampleName = "MyPicture";
+                    if (fileName.isEmpty() && savedCont == 1) {
+                        fileName = exampleName;
+                    } else if (savedCont >= 2 && (fileName.isEmpty() || fileName.equals(exampleName))) {
+                        fileName = exampleName + savedCont;
+                    }
+                    fileChooser.setSelectedFile(new File(fileName + "." + format.substring(format.indexOf("=") + 1, format.indexOf(" extensions")).toLowerCase()));
+                }
+            }
+
+
+        });
+        fileChooser.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                return f.isDirectory();
+            }
+
+            @Override
+            public String getDescription() {
+                return null;
+            }
+        });
+        fileChooser.setFileFilter(new FileNameExtensionFilter("JPEG", "jpg", "jpeg"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("JPG", "jpg", "jpeg"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("PNG", "png"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("GIF", "gif"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("BMP", "bmp"));
+        fileChooser.setFileView(new FileView() {
+            @Override
+            public Icon getIcon(File f) {
+                ImageIcon icon = new ImageIcon("src/main/resources/images/folderIcon.png");
+                resizeIcon(icon, 16, 16);
+                return icon;
             }
         });
     }
@@ -534,7 +562,7 @@ public class GUIBoard extends JFrame {
                     return;
                 }
                 canvas.setParentMousePos(getMousePosition(true));
-                canvas.setLastPost(canvas.getLocation());
+                canvas.setLastPos(canvas.getLocation());
                 canvas.setLastSize(canvas.getSize());
                 canvas.doInit(true);
                 canvas.setZoom(canvas.getZoom() - e.getWheelRotation() * .05f);

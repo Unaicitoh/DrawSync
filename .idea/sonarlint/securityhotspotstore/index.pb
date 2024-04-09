@@ -64,3 +64,5 @@ e
 -src/main/java/com/ugs/drawsync/gui/Shape.java,f\9\f91e5bb2007f9e9e87720e718036d15bc40fafcf
 \
 ,src/main/java/com/ugs/drawsync/gui/Mode.java,3\a\3a80be5a0e4ace825437082c17db92b680652da4
+h
+8src/main/java/com/ugs/drawsync/gui/ComboBoxRenderer.java,e\5\e50f611f7481c5c806ca8b52e0238fb98af0bac7

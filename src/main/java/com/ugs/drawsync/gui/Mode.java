@@ -5,5 +5,5 @@ public enum Mode {
     SHAPER,
     ERASER,
     TEXTER,
-    MOVING
+    MOVING;
 }

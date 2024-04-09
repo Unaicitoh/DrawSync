@@ -1,24 +1,34 @@
 
 “
-java:S1301l"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8ÎÅŒÍë1J$1b4c0caa-64ee-4797-b5e9-abd83019a64d
-
-java:S1301x"KReplace this "switch" statement by "if" statements to increase readability.(Ñ€¬¸8ÎÅŒÍë1J$7829f526-3511-4233-9fd4-f8c5f94ae92d
+java:S13013"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8úñ©ªì1J$c9c028d7-ba33-40ca-aa5f-2319a96ca788
+“
+java:S13015"KReplace this "switch" statement by "if" statements to increase readability.(¥ç¿Àùÿÿÿÿ8úñ©ªì1J$c8d14ff9-5238-4c0c-bda2-5e63b2f6d9ea
+“
+java:S1301{"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8úñ©ªì1J$9aa2956d-6ed9-4ec5-98e3-61ba2a6f2a03
+
+java:S1301Š"KReplace this "switch" statement by "if" statements to increase readability.(Ñ€¬¸8úñ©ªì1J$fd9bcab5-b34e-48a8-a83d-354a0781f354
 ”
-java:S1301‰"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8ÎÅŒÍë1J$6b6d719d-91a0-40a1-b22f-42febaa37b60
+java:S1301›"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8úñ©ªì1J$4249bc6a-68cc-4182-9921-e522a21432c2
+‘
+java:S2259}"I"NullPointerException" will be thrown when invoking method "drawShape()".(†Ü»­úÿÿÿÿ8ÑŸªªì1J$58367316-971d-45e7-b947-98301eeacc54
 j
-java:S1948"'Make "image" transient or serializable.(ğã’8÷ÅŒÍë1J$91482d08-d424-484c-8e70-7acc59889b46
+java:S1948"'Make "image" transient or serializable.(ğã’8¡ò©ªì1J$2da506ff-f455-43da-ad04-174f5467f0a2
 €
-java:S18542"8Remove this useless assignment to local variable "rect".(ÀÓï’şÿÿÿÿ8ûÅŒÍë1J$d38bb6a6-ffaa-4890-a521-15aab9e01f00
+java:S18541"8Remove this useless assignment to local variable "rect".(ÀÓï’şÿÿÿÿ8¤ò©ªì1J$a5d61b4e-814d-4ec4-9b31-465e89ec6bee
 q
-java:S14812")Remove this unused "rect" local variable.(ÀÓï’şÿÿÿÿ8ûÅŒÍë1J$7b104ed6-e0ea-4983-b3e0-a5658fd51f32
-~	java:S1253"<This block of commented-out lines of code should be removed.(‘ÒÙ8ûÅŒÍë1J$90a3b03f-e1d8-469a-a530-45b298a3b808
+java:S14811")Remove this unused "rect" local variable.(ÀÓï’şÿÿÿÿ8¤ò©ªì1J$e19ec7ca-fcca-4317-b806-f0d67de7597f
+ 	java:S1313"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8¥ò©ªì1J$ba588ee5-857f-46f4-8d34-091bbb2819bd
+~	java:S1252"<This block of commented-out lines of code should be removed.(‘ÒÙ8¥ò©ªì1J$b6790541-154a-43c8-81c4-f53515051de9
+i	java:S1315""Add a default case to this switch.(¥ç¿Àùÿÿÿÿ8¥ò©ªì1J$1090500a-0133-4fe8-a228-a97c93be72b1
 •
-java:S3776:"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(³ıŸê8üÅŒÍë1J$19702e5d-2f95-4fa1-bc02-f382778b1d52
+java:S3776H"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(³ıŸê8¦ò©ªì1J$816822e3-b3c1-4197-b98a-20be3f5f50b0
 ”
-java:S3776]"RRefactor this method to reduce its Cognitive Complexity from 24 to the 15 allowed.(é¾¶{8ÿÅŒÍë1J$fc103564-26de-44d2-90a9-d8bac3e5f4da
- 	java:S131l"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8€ÆŒÍë1J$9867864c-c46a-47eb-8305-fcbcc9e41903
-›	java:S131x"YComplete cases by adding the missing enum constants or add a default case to this switch.(Ñ€¬¸8€ÆŒÍë1J$2c647cf8-478a-4e30-93e2-7fedc92d00bb
-¡	java:S131‰"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8ÆŒÍë1J$baea0cb8-8fff-4417-bc58-2b88841818fc
-¡	java:S131"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8‚ÆŒÍë1J$34ede992-d30b-498a-a35e-1c86170a4b4e
+java:S3776l"RRefactor this method to reduce its Cognitive Complexity from 26 to the 15 allowed.(é¾¶{8¨ò©ªì1J$d4649599-5060-4f06-a223-d193a88c065f
+ 	java:S131{"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8ªò©ªì1J$fa48121f-20fe-4031-a2a9-fec3f0595c1c
+œ	java:S131Š"YComplete cases by adding the missing enum constants or add a default case to this switch.(Ñ€¬¸8«ò©ªì1J$0e6ac082-d056-4b6f-8b7a-fb504b88ae84
+¡	java:S131›"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8«ò©ªì1J$bf63f398-2971-4e9d-bc11-59493a5dc59e
+¡	java:S131°"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8¬ò©ªì1J$a0616ffa-e639-41d1-b470-1f93ea9e0ec3
+l
+java:S1185Å"(Remove this method to simply inherit it.(í™ÿ¶8­ò©ªì1J$9a9cc083-9089-451b-8321-cd6c0feb6ac5
 r
-java:S1068"*Remove this unused "shapes" private field.(ç¤Ä…ûÿÿÿÿ8‡ÆŒÍë1J$461577b6-24f9-4687-a412-ad639a0bb363
+java:S1068"*Remove this unused "shapes" private field.(ç¤Ä…ûÿÿÿÿ8±ò©ªì1J$c0c33dfe-95c9-43ac-a55f-bd5ce6c2305a
