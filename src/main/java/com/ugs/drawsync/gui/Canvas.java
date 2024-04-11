@@ -7,6 +7,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Canvas extends JPanel {
 
@@ -29,6 +30,8 @@ public class Canvas extends JPanel {
     private Dimension lastSize;
     private boolean isPressed;
     private Point parentMousePos;
+    private Thread airbrushThread;
+    private boolean isDragging;
 
     public Canvas() {
         shapes = new ArrayList<>();
@@ -44,18 +47,28 @@ public class Canvas extends JPanel {
         addEventListeners();
     }
 
-    private void drawShape(Color color, int x, int y, int w, int h) {
+    private void drawShape(int x, int y, int w, int h) {
         Graphics2D g2d = setupImageGraphics();
         Shape rect = new Shape(color, x, y, w, h);
 //        shapes.add(rect);
+        float[] rgb = new float[4];
         switch (mode) {
             case DRAWER -> {
                 switch (drawingType) {
-                    case 0 -> color = new Color(color.getRed(), color.getGreen(), color.getBlue(), 1);
-                    case 1 -> color = new Color(color.getRed(), color.getGreen(), color.getBlue(), .2f);
+                    case 0 -> adjustAlphaProp(1, x, y, w, h, rgb, g2d);
+                    case 1 -> adjustAlphaProp(.25f, x, y, w, h, rgb, g2d);
+                    case 2 -> adjustAlphaProp(.1f, x, y, w, h, rgb, g2d);
+                    case 3 -> {
+                        color = new Color(color.getColorSpace(), color.getRGBComponents(rgb), 1);
+                        g2d.setColor(color);
+                        for (int i = -2; i <= 2; i++) {
+                            g2d.drawLine(x - stroke + stroke / 2 + i, y + stroke + stroke / 2, x + stroke + stroke / 2 + i, y - stroke + stroke / 2);
+                        }
+                    }
+                    case 4 -> {
+                        drawAirbrush(x, y, w, h, rgb);
+                    }
                 }
-                g2d.setColor(color);
-                g2d.fillArc(x, y, w, h, 0, 360);
             }
             case ERASER -> {
                 Composite comp = g2d.getComposite();
@@ -64,8 +77,54 @@ public class Canvas extends JPanel {
                 g2d.setComposite(comp);
             }
         }
+
         repaint();
         g2d.dispose();
+    }
+
+    private void adjustAlphaProp(float alpha, int x, int y, int w, int h, float[] rgb, Graphics2D g2d) {
+        color = new Color(color.getColorSpace(), color.getRGBComponents(rgb), alpha);
+        g2d.setColor(color);
+        g2d.fillArc(x, y, w, h, 0, 360);
+    }
+
+    private void drawAirbrush(int x, int y, int w, int h, float[] rgb) {
+        Random rnd = new Random();
+        int density;
+        if (w < 25) {
+            density = w * h / 5;
+        } else if (w < 75) {
+            density = w * h / 10;
+        } else {
+            density = w * h / 15;
+        }
+        Graphics2D g2 = setupImageGraphics();
+        color = new Color(color.getColorSpace(), color.getRGBComponents(rgb), 1);
+        g2.setColor(color);
+        if (isPressed && !isDragging) {
+            airbrushThread = new Thread(() -> {
+                while (isPressed && !isDragging) {
+                    createAirbrushNoise(x, y, w, h, density, rnd, g2);
+                    try {
+                        Thread.sleep(25);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    repaint(x, y, w, h);
+                }
+            });
+            airbrushThread.start();
+        } else {
+            createAirbrushNoise(x, y, w, h, density, rnd, g2);
+        }
+    }
+
+    private static void createAirbrushNoise(int x, int y, int w, int h, int density, Random rnd, Graphics2D g2) {
+        for (int i = 0; i < density; i++) {
+            int xOffset = rnd.nextInt(w);
+            int yOffset = rnd.nextInt(h);
+            g2.fillRect(x + xOffset, y + yOffset, 1, 1);
+        }
     }
 
     @Override
@@ -97,8 +156,7 @@ public class Canvas extends JPanel {
             }
             doInit = !doInit;
         }
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
+
         if (image != null) {
             AffineTransform at = AffineTransform.getScaleInstance(zoom, zoom);
             g2d.drawImage(image, at, null);
@@ -109,28 +167,33 @@ public class Canvas extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                isPressed = true;
                 super.mousePressed(e);
+                isPressed = true;
+                mouseX = e.getX();
+                mouseY = e.getY();
                 if (e.getButton() == 3) {
                     lastMode = mode;
                     mode = Mode.MOVING;
-                    mouseX = e.getX();
-                    mouseY = e.getY();
                     setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
                 } else if (e.getButton() == 1 && canInteract) {
                     int x = (int) (e.getX() / zoom);
                     int y = (int) (e.getY() / zoom);
                     switch (mode) {
-                        case DRAWER -> drawShape(color, x - stroke / 2, y - stroke / 2, stroke, stroke);
-                        case ERASER -> drawShape(null, x - stroke / 2, y - stroke / 2, stroke, stroke);
+                        case DRAWER -> {
+                            if (airbrushThread == null || !airbrushThread.isAlive()) {
+                                drawShape(x - stroke / 2, y - stroke / 2, stroke, stroke);
+                            }
+                        }
+                        case ERASER -> drawShape(x - stroke / 2, y - stroke / 2, stroke, stroke);
                     }
                 }
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                isPressed = false;
                 super.mousePressed(e);
+                isPressed = false;
+                isDragging = false;
                 if (mode == Mode.MOVING) {
                     setLastPos(getLocation());
                 }
@@ -171,15 +234,16 @@ public class Canvas extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
+                mouseX = e.getX();
+                mouseY = e.getY();
+                isDragging = true;
                 int x = (int) (e.getX() / zoom);
                 int y = (int) (e.getY() / zoom);
                 switch (mode) {
-                    case DRAWER -> {
-                        if (canInteract) drawShape(color, x - stroke / 2, y - stroke / 2, stroke, stroke);
-                    }
-                    case ERASER -> {
-                        if (canInteract)
-                            drawShape(Color.WHITE, x - stroke / 2, y - stroke / 2, stroke, stroke);
+                    case DRAWER, ERASER -> {
+                        if (canInteract) {
+                            drawShape(x - stroke / 2, y - stroke / 2, stroke, stroke);
+                        }
                     }
                     case MOVING -> {
                         int diffX = e.getX() - mouseX;
@@ -210,9 +274,7 @@ public class Canvas extends JPanel {
 
     private Graphics2D setupImageGraphics() {
         Graphics2D g2d = (Graphics2D) image.getGraphics();
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         return g2d;
     }
 

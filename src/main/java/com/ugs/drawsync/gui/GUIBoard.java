@@ -222,12 +222,12 @@ public class GUIBoard extends JFrame {
         saveButton = createCanvasButton("src/main/resources/images/saveIcon.png");
         fileChooser = new JFileChooser();
         eraserButton = createCanvasButton("src/main/resources/images/eraserIcon.png");
+        canvasOptions.add(eraserButton);
+        canvasOptions.add(brushOptions);
         canvasOptions.add(colorButton);
         canvasOptions.add(lineButton);
         canvasOptions.add(textButton);
         canvasOptions.add(shapesButton);
-        canvasOptions.add(eraserButton);
-        canvasOptions.add(brushOptions);
         canvasOptions.add(sliderPanel);
         canvasOptions.add(undoButton);
         canvasOptions.add(redoButton);
@@ -351,7 +351,7 @@ public class GUIBoard extends JFrame {
         brushOptions.addActionListener(b -> {
             changeMode(Mode.DRAWER);
             canvas.setDrawingType(brushOptions.getSelectedIndex());
-            System.out.println("location " + brushOptions.getLocation());
+            System.out.println("option " + brushOptions.getSelectedIndex());
         });
         eraserButton.addActionListener(b -> changeMode(Mode.ERASER));
         saveButton.addActionListener(b -> openFileChooser());

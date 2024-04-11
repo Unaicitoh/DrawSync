@@ -1,30 +1,30 @@
 
-	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8çº³©ì1J$817fec85-2fa8-4939-aded-f143c4cf0575
-	java:S112£"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8èº³©ì1J$87c79cf1-e3bf-4b68-a0f6-7f43e1d40913
-	java:S112Ì"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8éº³©ì1J$55c83dfe-c7ba-4f24-a0bf-2dffed1d860a
-	java:S112ê"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8éº³©ì1J$dd29bdf0-bc6d-44bf-a604-711feba2f74d
-	java:S112Œ"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8éº³©ì1J$17442e28-9f5a-44c4-b59e-f55ddeecc277
-	java:S112ë"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8éº³©ì1J$341c4ffe-1402-44b3-bda6-0778bd2e6dba
+	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8©¯¾ì1J$0e667208-aba1-441e-a902-0e57fe879458
+	java:S112£"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8©¯¾ì1J$86de1578-57b2-4475-9031-94d3cce62f70
+	java:S112Ì"FDefine and throw a dedicated exception instead of using a generic one.(¼ÿ¾¹ÿÿÿÿÿ8¬¯¾ì1J$00a961c1-eb29-43e8-b949-3858ca60d1c0
+	java:S112ê"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8¬¯¾ì1J$7eb859e7-7420-4d61-931a-88cfc16c5573
+	java:S112Œ"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8¬¯¾ì1J$af32f9b9-7df0-45bb-8847-79fdcea1b17e
+	java:S112ë"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8¬¯¾ì1J$4ce2d13c-bf8a-4227-a697-de87054b5108
 x
-java:S3740È"/Provide the parametrized type for this generic.(æŸúšúÿÿÿÿ8éº³©ì1J$61165196-887b-4cf1-9714-1dc086e178e1
+java:S3740È"/Provide the parametrized type for this generic.(æŸúšúÿÿÿÿ8­¯¾ì1J$e66cc1f8-a28f-4979-b16e-eb633c589735
 x
-java:S3740È"/Provide the parametrized type for this generic.(æŸúšúÿÿÿÿ8éº³©ì1J$707e53b1-cc3e-4aa9-9096-bf022a871520
+java:S3740È"/Provide the parametrized type for this generic.(æŸúšúÿÿÿÿ8­¯¾ì1J$633203ca-3197-4e36-a0d6-4b43aef20094
 ¤
-java:S14506"\Remove the "canvasOptions" field and declare it as a local variable in the relevant methods.(¿­·ÿÿÿÿÿ8»³©ì1J$90ade247-fc8e-43d7-819c-d542eef6a1e7
+java:S14506"\Remove the "canvasOptions" field and declare it as a local variable in the relevant methods.(¿­·ÿÿÿÿÿ8ñ¯¾ì1J$c48f2b4c-e9e3-446e-979e-af0c1462dc3a
 œ
-java:S1450/"YRemove the "lineButton" field and declare it as a local variable in the relevant methods.(Òª©É8»³©ì1J$bed64d2b-bf17-4e97-aa21-df91bc2346f9
+java:S1450/"YRemove the "lineButton" field and declare it as a local variable in the relevant methods.(Òª©É8ò¯¾ì1J$36ca5983-f297-45ff-9d12-e39984c9e9f5
 Ÿ
-java:S1149È"VReplace the synchronized class "Hashtable" by an unsynchronized one such as "HashMap".(æŸúšúÿÿÿÿ8’»³©ì1J$73299c40-4f33-4521-9fe3-6b9c7901f6fd
+java:S1149È"VReplace the synchronized class "Hashtable" by an unsynchronized one such as "HashMap".(æŸúšúÿÿÿÿ8õ¯¾ì1J$d5aa21d4-17aa-4e16-9ac5-ff7edc24b6aa
 Š
-java:S1117¸"ARename "canvasOptions" which hides the field declared at line 54.(ªĞ«‚üÿÿÿÿ8›»³©ì1J$21b35b3e-d50c-4e11-9336-85f419e91716
-n	java:S106â"+Replace this use of System.out by a logger.(ºÎ¥ñ8¦»³©ì1J$52092260-9826-4c1b-bd70-61dae5bf6497
+java:S1117¸"ARename "canvasOptions" which hides the field declared at line 54.(ªĞ«‚üÿÿÿÿ8‡‚¯¾ì1J$a16d680e-1eb4-427a-bab8-e710fea03c0f
+n	java:S106â"+Replace this use of System.out by a logger.(ôääÉ8¢‚¯¾ì1J$689e1dbe-144c-412c-8f9a-f677f70b34da
 ›
-java:S3776‘"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(š„œ×üÿÿÿÿ8©»³©ì1J$a881bfc1-0eb1-4608-88f8-1d24cd54c0a9
+java:S3776‘"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(š„œ×üÿÿÿÿ8¼‚¯¾ì1J$012a701f-213a-49df-83b7-ad5dc8bccb24
 ›
-java:S3776Õ"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(£°É¬ÿÿÿÿÿ8­»³©ì1J$19e0447a-31f6-4360-b327-85255319dfed
+java:S3776Õ"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(£°É¬ÿÿÿÿÿ8Ã‚¯¾ì1J$4c9c8ee7-10d5-46a7-92ef-987abae59e38
 m
-java:S2140ƒ")Use "java.util.Random.nextInt()" instead.(Ø£“á8´»³©ì1J$5dfbc838-979d-4ec7-9a84-55c79046010c
+java:S2140ƒ")Use "java.util.Random.nextInt()" instead.(Ø£“á8Ê‚¯¾ì1J$f6f72fca-e683-4bfa-b658-435bd1059cd4
 €
-java:S6019Ø"<Remove the '?' from this unnecessarily reluctant quantifier.(ÀÂÄ€8º»³©ì1J$423b1b1d-7133-4397-b361-de0e5c9df6e3
+java:S6019Ø"<Remove the '?' from this unnecessarily reluctant quantifier.(ÀÂÄ€8Ó‚¯¾ì1J$8925b273-6d8a-4b04-bd9f-4659c8d4732a
 ˜
-java:S5843Ø"TSimplify this regular expression to reduce its complexity from 23 to the 20 allowed.(ÀÂÄ€8º»³©ì1J$5cea9066-af08-4156-806f-dce2774f0fbf
+java:S5843Ø"TSimplify this regular expression to reduce its complexity from 23 to the 20 allowed.(ÀÂÄ€8Ô‚¯¾ì1J$3b751078-45dc-4389-b346-3c0810af42d6

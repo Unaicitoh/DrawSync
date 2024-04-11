@@ -1,34 +1,41 @@
 
+	java:S112o"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8îÍ½ûì1J$6b10af60-920f-4e9e-b73b-f414838ac3c9
 “
-java:S13013"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8úñ©ªì1J$c9c028d7-ba33-40ca-aa5f-2319a96ca788
-“
-java:S13015"KReplace this "switch" statement by "if" statements to increase readability.(¥ç¿Àùÿÿÿÿ8úñ©ªì1J$c8d14ff9-5238-4c0c-bda2-5e63b2f6d9ea
-“
-java:S1301{"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8úñ©ªì1J$9aa2956d-6ed9-4ec5-98e3-61ba2a6f2a03
+java:S13017"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8°Ç¢úì1J$2f027898-4855-4296-9c5a-0b633e3445a1
+”
+java:S1301µ"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8°Ç¢úì1J$b360e724-6990-495a-a211-3ce7e04570d9
 
-java:S1301Š"KReplace this "switch" statement by "if" statements to increase readability.(Ñ€¬¸8úñ©ªì1J$fd9bcab5-b34e-48a8-a83d-354a0781f354
+java:S1301É"KReplace this "switch" statement by "if" statements to increase readability.(Ñ€¬¸8°Ç¢úì1J$85808c37-9cd8-4a20-9744-8e65b2ef1062
 ”
-java:S1301›"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8úñ©ªì1J$4249bc6a-68cc-4182-9921-e522a21432c2
-‘
-java:S2259}"I"NullPointerException" will be thrown when invoking method "drawShape()".(†Ü»­úÿÿÿÿ8ÑŸªªì1J$58367316-971d-45e7-b947-98301eeacc54
+java:S1301Ú"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8°Ç¢úì1J$f0b75903-7a11-4833-b496-a6ae4f31ad11
+”
+java:S1301ò"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8œ¨Ÿûì1J$19517433-b5d9-45a2-885c-be20e8436b8d
 j
-java:S1948"'Make "image" transient or serializable.(ğã’8¡ò©ªì1J$2da506ff-f455-43da-ad04-174f5467f0a2
+java:S1948"'Make "image" transient or serializable.(ğã’8ÕÇ¢úì1J$d7ed5177-e7da-454d-ad66-61f072ce6185
+s
+java:S1948!"0Make "airbrushThread" transient or serializable.(ëèèÈ8ÕÇ¢úì1J$696ba881-cd67-4a2a-9b1d-63e88d16c4f3
 €
-java:S18541"8Remove this useless assignment to local variable "rect".(ÀÓï’şÿÿÿÿ8¤ò©ªì1J$a5d61b4e-814d-4ec4-9b31-465e89ec6bee
+java:S18544"8Remove this useless assignment to local variable "rect".(ÀÓï’şÿÿÿÿ8ÙÇ¢úì1J$72af3b9c-382c-4c48-a6f4-616dea601d9c
 q
-java:S14811")Remove this unused "rect" local variable.(ÀÓï’şÿÿÿÿ8¤ò©ªì1J$e19ec7ca-fcca-4317-b806-f0d67de7597f
- 	java:S1313"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8¥ò©ªì1J$ba588ee5-857f-46f4-8d34-091bbb2819bd
-~	java:S1252"<This block of commented-out lines of code should be removed.(‘ÒÙ8¥ò©ªì1J$b6790541-154a-43c8-81c4-f53515051de9
-i	java:S1315""Add a default case to this switch.(¥ç¿Àùÿÿÿÿ8¥ò©ªì1J$1090500a-0133-4fe8-a228-a97c93be72b1
+java:S14814")Remove this unused "rect" local variable.(ÀÓï’şÿÿÿÿ8ÙÇ¢úì1J$a571dd06-09c5-4c73-8824-71a74119ce42
+~	java:S1255"<This block of commented-out lines of code should be removed.(‘ÒÙ8ÙÇ¢úì1J$d4ce360f-0ee6-469d-b328-eace2bb686de
+ 	java:S1317"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8ÚÇ¢úì1J$804829e4-a691-4fb5-b4f0-64bb7fa500b5
+i	java:S1319""Add a default case to this switch.(¥ç¿Àùÿÿÿÿ8ÚÇ¢úì1J$23c732f0-a15a-491e-9a94-f4d8804e4767
+d
+java:S6205D"Remove this redundant block.(Çøÿÿÿÿÿ8ËÄÎûì1J$e3e12503-47f0-4089-9659-157d08334f8f
+a
+java:S2119\"Save and re-use this "Random".(–áÍÈ8Î½ûì1J$0a2b0af0-8d14-4abe-bbb6-d85f54c7b493
+¡
+java:S2142n"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€8Î½ûì1J$463910c2-94a5-406e-a266-e09f7c9a464b
+–
+java:S3776ƒ"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(³ıŸê8ŞÇ¢úì1J$7c233f7e-3d64-4e51-8cf7-bbc992963330
 •
-java:S3776H"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(³ıŸê8¦ò©ªì1J$816822e3-b3c1-4197-b98a-20be3f5f50b0
-”
-java:S3776l"RRefactor this method to reduce its Cognitive Complexity from 26 to the 15 allowed.(é¾¶{8¨ò©ªì1J$d4649599-5060-4f06-a223-d193a88c065f
- 	java:S131{"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8ªò©ªì1J$fa48121f-20fe-4031-a2a9-fec3f0595c1c
-œ	java:S131Š"YComplete cases by adding the missing enum constants or add a default case to this switch.(Ñ€¬¸8«ò©ªì1J$0e6ac082-d056-4b6f-8b7a-fb504b88ae84
-¡	java:S131›"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8«ò©ªì1J$bf63f398-2971-4e9d-bc11-59493a5dc59e
-¡	java:S131°"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8¬ò©ªì1J$a0616ffa-e639-41d1-b470-1f93ea9e0ec3
+java:S3776¦"RRefactor this method to reduce its Cognitive Complexity from 28 to the 15 allowed.(é¾¶{8àÇ¢úì1J$14af3bdb-5b43-4930-860b-a631d50614e9
+¡	java:S131µ"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8ãÇ¢úì1J$81ad0195-4f92-4b2a-8ac7-0f0d3a0d736a
+œ	java:S131É"YComplete cases by adding the missing enum constants or add a default case to this switch.(Ñ€¬¸8ãÇ¢úì1J$2392d6ef-829a-4ea3-ba4b-f7882912bbf6
+¡	java:S131Ú"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8äÇ¢úì1J$aa8159d9-4b0f-4b8c-ac78-159dc41b504a
+¡	java:S131ò"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8Ï¨Ÿûì1J$cef5a3ee-3a59-4b49-8229-40a202f9b140
 l
-java:S1185Å"(Remove this method to simply inherit it.(í™ÿ¶8­ò©ªì1J$9a9cc083-9089-451b-8321-cd6c0feb6ac5
+java:S1185…"(Remove this method to simply inherit it.(í™ÿ¶8åÇ¢úì1J$4c2cf2ca-d15e-488d-b2c1-de2a85132574
 r
-java:S1068"*Remove this unused "shapes" private field.(ç¤Ä…ûÿÿÿÿ8±ò©ªì1J$c0c33dfe-95c9-43ac-a55f-bd5ce6c2305a
+java:S1068"*Remove this unused "shapes" private field.(ç¤Ä…ûÿÿÿÿ8éÇ¢úì1J$27c6aff4-8c48-4c95-98d5-686a247e1f82
