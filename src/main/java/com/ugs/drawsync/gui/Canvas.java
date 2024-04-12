@@ -32,9 +32,11 @@ public class Canvas extends JPanel {
     private Point parentMousePos;
     private Thread airbrushThread;
     private boolean isDragging;
+    private List<Point> polygonVertices;
 
     public Canvas() {
         shapes = new ArrayList<>();
+        polygonVertices = new ArrayList<>();
         color = Color.BLACK;
         mode = Mode.DRAWER;
         image = new BufferedImage(CANVAS_SIZE, CANVAS_SIZE, BufferedImage.TYPE_INT_ARGB);
@@ -76,8 +78,17 @@ public class Canvas extends JPanel {
                 g2d.fillArc(x, y, w, h, 0, 360);
                 g2d.setComposite(comp);
             }
+            case LINER -> {
+                color = new Color(color.getColorSpace(), color.getRGBComponents(rgb), 1);
+                g2d.setColor(color);
+                Point p1 = polygonVertices.get(polygonVertices.size() - 1);
+                Point p2 = polygonVertices.get(polygonVertices.size() - 2);
+//                w=Math.min(7,w);
+                for (int i = -(w / 2); i < w / 2; i++) {
+                    g2d.drawLine(p1.x + i, p1.y + i, p2.x + i, p2.y + i);
+                }
+            }
         }
-
         repaint();
         g2d.dispose();
     }
@@ -110,7 +121,7 @@ public class Canvas extends JPanel {
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                    repaint(x, y, w, h);
+                    repaint(x, y, w * stroke, h * stroke);
                 }
             });
             airbrushThread.start();
@@ -172,6 +183,9 @@ public class Canvas extends JPanel {
                 mouseX = e.getX();
                 mouseY = e.getY();
                 if (e.getButton() == 3) {
+                    if (mode == Mode.LINER && !polygonVertices.isEmpty()) {
+                        polygonVertices.clear();
+                    }
                     lastMode = mode;
                     mode = Mode.MOVING;
                     setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
@@ -185,6 +199,12 @@ public class Canvas extends JPanel {
                             }
                         }
                         case ERASER -> drawShape(x - stroke / 2, y - stroke / 2, stroke, stroke);
+                        case LINER -> {
+                            polygonVertices.add(new Point(x, y));
+                            if (polygonVertices.size() > 1) {
+                                drawShape(0, 0, stroke, stroke);
+                            }
+                        }
                     }
                 }
             }
@@ -199,7 +219,7 @@ public class Canvas extends JPanel {
                 }
                 if (e.getButton() == 3) {
                     switch (lastMode) {
-                        case DRAWER -> {
+                        case DRAWER, LINER -> {
                             setMode(lastMode);
                             setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                         }
@@ -216,7 +236,7 @@ public class Canvas extends JPanel {
                 super.mousePressed(e);
                 canInteract = true;
                 switch (mode) {
-                    case DRAWER -> setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+                    case DRAWER, LINER -> setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
                     case ERASER -> setCursor(eraserCursor);
                 }
             }
@@ -234,8 +254,6 @@ public class Canvas extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
-                mouseX = e.getX();
-                mouseY = e.getY();
                 isDragging = true;
                 int x = (int) (e.getX() / zoom);
                 int y = (int) (e.getY() / zoom);
@@ -254,6 +272,16 @@ public class Canvas extends JPanel {
                         setLocation(p.x + diffX, p.y + diffY);
                     }
                 }
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                super.mouseMoved(e);
+//                int x = (int) (e.getX() / zoom);
+//                int y = (int) (e.getY() / zoom);
+//                if(mode==Mode.LINER && !polygonVertices.isEmpty()){
+//                    drawShape(x,y,stroke,stroke);
+//                }
             }
         });
         addComponentListener(new ComponentAdapter() {
@@ -364,5 +392,9 @@ public class Canvas extends JPanel {
 
     public void setDrawingType(int drawingType) {
         this.drawingType = drawingType;
+    }
+
+    public List<Point> getPolygonVertices() {
+        return polygonVertices;
     }
 }

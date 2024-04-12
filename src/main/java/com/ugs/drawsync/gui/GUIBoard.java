@@ -341,7 +341,12 @@ public class GUIBoard extends JFrame {
     }
 
     private void createMainButtonsListeners() {
-        clearButton.addActionListener(b -> canvas.clear());
+        clearButton.addActionListener(b -> {
+            canvas.clear();
+            if (canvas.getMode() == Mode.LINER) {
+                canvas.getPolygonVertices().clear();
+            }
+        });
         colorButton.addActionListener(b -> {
             Color color = JColorChooser.showDialog(null, "Pick your drawing Color", canvas.getColor(), false);
             if (color != null) {
@@ -351,7 +356,6 @@ public class GUIBoard extends JFrame {
         brushOptions.addActionListener(b -> {
             changeMode(Mode.DRAWER);
             canvas.setDrawingType(brushOptions.getSelectedIndex());
-            System.out.println("option " + brushOptions.getSelectedIndex());
         });
         eraserButton.addActionListener(b -> changeMode(Mode.ERASER));
         saveButton.addActionListener(b -> openFileChooser());
@@ -362,12 +366,13 @@ public class GUIBoard extends JFrame {
                 throw new RuntimeException(e);
             }
         });
-        strokeSliderButton.addChangeListener(e -> {
-            JSlider slider = (JSlider) e.getSource();
+        strokeSliderButton.addChangeListener(b -> {
+            JSlider slider = (JSlider) b.getSource();
             if (!slider.getValueIsAdjusting()) {
                 canvas.setStroke(Math.max(2, slider.getValue()));
             }
         });
+        lineButton.addActionListener(b -> changeMode(Mode.LINER));
     }
 
     private void openFileChooser() {
@@ -464,6 +469,9 @@ public class GUIBoard extends JFrame {
     private void changeMode(Mode mode) {
         canvas.setLastMode(canvas.getMode());
         canvas.setMode(mode);
+        if (canvas.getLastMode() == Mode.LINER) {
+            canvas.getPolygonVertices().clear();
+        }
     }
 
     private void createIntroButtonsListeners() {

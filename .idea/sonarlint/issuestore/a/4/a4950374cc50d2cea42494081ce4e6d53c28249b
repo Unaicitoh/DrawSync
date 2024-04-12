@@ -1,41 +1,41 @@
 
-	java:S112o"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8îÍ½ûì1J$6b10af60-920f-4e9e-b73b-f414838ac3c9
-“
-java:S13017"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8°Ç¢úì1J$2f027898-4855-4296-9c5a-0b633e3445a1
-”
-java:S1301µ"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8°Ç¢úì1J$b360e724-6990-495a-a211-3ce7e04570d9
+	java:S112z"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8Ãš÷¤í1J$f42ea3ba-529b-47c0-b61c-f0b4ce1428d6
 
-java:S1301É"KReplace this "switch" statement by "if" statements to increase readability.(Ñ€¬¸8°Ç¢úì1J$85808c37-9cd8-4a20-9744-8e65b2ef1062
+java:S1301İ"KReplace this "switch" statement by "if" statements to increase readability.(Ñ€¬¸8Çš÷¤í1J$37016c87-5855-4119-87b0-de29ca46fe4f
 ”
-java:S1301Ú"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8°Ç¢úì1J$f0b75903-7a11-4833-b496-a6ae4f31ad11
+java:S1301î"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8Çš÷¤í1J$8f1cc112-c559-474c-94f5-0084b1aab5dc
 ”
-java:S1301ò"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8œ¨Ÿûì1J$19517433-b5d9-45a2-885c-be20e8436b8d
+java:S1301„"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ8Çš÷¤í1J$1f5f1c91-420a-4bb8-8d33-3c7f8883f078
 j
-java:S1948"'Make "image" transient or serializable.(ğã’8ÕÇ¢úì1J$d7ed5177-e7da-454d-ad66-61f072ce6185
+java:S1948"'Make "image" transient or serializable.(ğã’8ëš÷¤í1J$a3e282ed-f610-42e3-ac2d-3559a67efa24
 s
-java:S1948!"0Make "airbrushThread" transient or serializable.(ëèèÈ8ÕÇ¢úì1J$696ba881-cd67-4a2a-9b1d-63e88d16c4f3
+java:S1948!"0Make "airbrushThread" transient or serializable.(ëèèÈ8ëš÷¤í1J$aa030647-cc70-46bc-82cf-7a82510eea4e
 €
-java:S18544"8Remove this useless assignment to local variable "rect".(ÀÓï’şÿÿÿÿ8ÙÇ¢úì1J$72af3b9c-382c-4c48-a6f4-616dea601d9c
+java:S18546"8Remove this useless assignment to local variable "rect".(ÀÓï’şÿÿÿÿ8îš÷¤í1J$75f433bc-943d-4023-80ea-b68cce8c42c5
 q
-java:S14814")Remove this unused "rect" local variable.(ÀÓï’şÿÿÿÿ8ÙÇ¢úì1J$a571dd06-09c5-4c73-8824-71a74119ce42
-~	java:S1255"<This block of commented-out lines of code should be removed.(‘ÒÙ8ÙÇ¢úì1J$d4ce360f-0ee6-469d-b328-eace2bb686de
- 	java:S1317"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8ÚÇ¢úì1J$804829e4-a691-4fb5-b4f0-64bb7fa500b5
-i	java:S1319""Add a default case to this switch.(¥ç¿Àùÿÿÿÿ8ÚÇ¢úì1J$23c732f0-a15a-491e-9a94-f4d8804e4767
+java:S14816")Remove this unused "rect" local variable.(ÀÓï’şÿÿÿÿ8ïš÷¤í1J$63cd4dc1-ef03-4a83-b302-6cf0aec70cee
+~	java:S1257"<This block of commented-out lines of code should be removed.(‘ÒÙ8ïš÷¤í1J$d0712984-7584-4c9a-a8dd-db10bb17f3e6
+ 	java:S1319"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8ïš÷¤í1J$881275cf-420b-44a1-a66e-faf200ccdb60
+i	java:S131;""Add a default case to this switch.(¥ç¿Àùÿÿÿÿ8ïš÷¤í1J$f1d40d4f-30b4-491b-babc-4bda6c21af97
 d
-java:S6205D"Remove this redundant block.(Çøÿÿÿÿÿ8ËÄÎûì1J$e3e12503-47f0-4089-9659-157d08334f8f
+java:S6205F"Remove this redundant block.(Çøÿÿÿÿÿ8ğš÷¤í1J$04545af0-f1b9-4f49-8775-1a9173ae4fd8
+}	java:S125V"<This block of commented-out lines of code should be removed.(óÛŞ8ñš÷¤í1J$6b40a6f3-b08e-4472-aa6e-d4d1e5298e73
 a
-java:S2119\"Save and re-use this "Random".(–áÍÈ8Î½ûì1J$0a2b0af0-8d14-4abe-bbb6-d85f54c7b493
+java:S2119g"Save and re-use this "Random".(–áÍÈ8òš÷¤í1J$932e3e7e-e16c-4ff4-86dc-9cc5721982c1
 ¡
-java:S2142n"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€8Î½ûì1J$463910c2-94a5-406e-a266-e09f7c9a464b
+java:S2142y"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€8óš÷¤í1J$42be6dfd-f1ad-4179-9f67-02d789dd212e
 –
-java:S3776ƒ"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(³ıŸê8ŞÇ¢úì1J$7c233f7e-3d64-4e51-8cf7-bbc992963330
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(³ıŸê8õš÷¤í1J$e95d8df0-a42b-4ffe-b62f-1f08b547e0de
 •
-java:S3776¦"RRefactor this method to reduce its Cognitive Complexity from 28 to the 15 allowed.(é¾¶{8àÇ¢úì1J$14af3bdb-5b43-4930-860b-a631d50614e9
-¡	java:S131µ"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8ãÇ¢úì1J$81ad0195-4f92-4b2a-8ac7-0f0d3a0d736a
-œ	java:S131É"YComplete cases by adding the missing enum constants or add a default case to this switch.(Ñ€¬¸8ãÇ¢úì1J$2392d6ef-829a-4ea3-ba4b-f7882912bbf6
-¡	java:S131Ú"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8äÇ¢úì1J$aa8159d9-4b0f-4b8c-ac78-159dc41b504a
-¡	java:S131ò"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8Ï¨Ÿûì1J$cef5a3ee-3a59-4b49-8229-40a202f9b140
+java:S3776±"RRefactor this method to reduce its Cognitive Complexity from 36 to the 15 allowed.(é¾¶{8öš÷¤í1J$99e357c3-e285-4226-8c01-22039d2f7905
+¡	java:S131Ã"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8øš÷¤í1J$d8408ea5-91c4-4dda-9a79-fa529ca3a522
+œ	java:S131İ"YComplete cases by adding the missing enum constants or add a default case to this switch.(Ñ€¬¸8ùš÷¤í1J$2ecd9bfc-fa61-487c-9380-60b422501c2e
+¡	java:S131î"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8úš÷¤í1J$5251bd7f-eedd-4938-97da-7fb29319ab3a
+¡	java:S131„"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ8ûš÷¤í1J$6337e307-d40d-47ae-a7c8-95f73a4c0604
 l
-java:S1185…"(Remove this method to simply inherit it.(í™ÿ¶8åÇ¢úì1J$4c2cf2ca-d15e-488d-b2c1-de2a85132574
+java:S1185–"(Remove this method to simply inherit it.(ç¨Î§8ŠÕ÷¤í1J$684c5a2a-9d83-4e0f-83a3-d48b69823f74
+	java:S125˜"<This block of commented-out lines of code should be removed.(¼•ƒª8‹Õ÷¤í1J$3219ae2d-6a6c-45aa-a604-6912e2a41259
+l
+java:S1185¡"(Remove this method to simply inherit it.(í™ÿ¶8üš÷¤í1J$cc669c89-0478-400c-a1bf-248d9e5e6c61
 r
-java:S1068"*Remove this unused "shapes" private field.(ç¤Ä…ûÿÿÿÿ8éÇ¢úì1J$27c6aff4-8c48-4c95-98d5-686a247e1f82
+java:S1068"*Remove this unused "shapes" private field.(ç¤Ä…ûÿÿÿÿ8€›÷¤í1J$6d879032-e1ca-4736-bc3b-2f5992ef0f90

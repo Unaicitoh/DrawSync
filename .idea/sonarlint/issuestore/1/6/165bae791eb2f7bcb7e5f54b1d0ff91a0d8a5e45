@@ -1,4 +1,4 @@
 
-r	java:S106$"+Replace this use of System.out by a logger.(ÌÁ‡Şøÿÿÿÿ8î‡µÊê1J$af14c5bd-460a-49ce-b27c-1e4667d44d10
-m	java:S1061"+Replace this use of System.err by a logger.(ÉŞõ¡8Åê©õê1J$38648bbb-8d65-43fe-8f57-12b45207f87a
-m	java:S106n"+Replace this use of System.out by a logger.(³ùÇì8Ùÿ©õê1J$8c171f79-6684-4565-b02b-078bc5df23ac
+r	java:S106$"+Replace this use of System.out by a logger.(ÌÁ‡Şøÿÿÿÿ8î‡µÊê1J$bbef8e37-b4bd-4c24-a506-98074007bac4
+m	java:S1061"+Replace this use of System.err by a logger.(ÉŞõ¡8Åê©õê1J$6e892af4-4775-4150-886a-89159093a191
+m	java:S106n"+Replace this use of System.out by a logger.(³ùÇì8Ùÿ©õê1J$1ab8684b-e303-4640-86ef-7a5711f22951
