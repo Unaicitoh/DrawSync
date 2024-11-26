@@ -6,3 +6,5 @@
 Local features done, chat works with desirable PORT oppened, you must know your IP
 
 Cooperative drawing not finished, local working as expected
+
+No .jar produced for distribution
